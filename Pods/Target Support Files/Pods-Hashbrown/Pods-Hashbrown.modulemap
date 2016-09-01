@@ -1,0 +1,6 @@
+framework module Pods_Hashbrown {
+  umbrella header "Pods-Hashbrown-umbrella.h"
+
+  export *
+  module * { export * }
+}

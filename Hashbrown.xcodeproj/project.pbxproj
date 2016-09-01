@@ -13,6 +13,7 @@
 		63D7BEBE1D77B9FE00EC2469 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63D7BEBD1D77B9FE00EC2469 /* Assets.xcassets */; };
 		63D7BEC11D77B9FE00EC2469 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D7BEBF1D77B9FE00EC2469 /* LaunchScreen.storyboard */; };
 		63D7BECC1D77B9FF00EC2469 /* HashbrownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BECB1D77B9FF00EC2469 /* HashbrownTests.swift */; };
+		D4E20E9C325DC279745B0106 /* Pods_Hashbrown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7D1E4214B99D4A4597D895 /* Pods_Hashbrown.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,9 @@
 		63D7BEC71D77B9FF00EC2469 /* HashbrownTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HashbrownTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63D7BECB1D77B9FF00EC2469 /* HashbrownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashbrownTests.swift; sourceTree = "<group>"; };
 		63D7BECD1D77B9FF00EC2469 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F17B03DCE720C75B60AAF0B /* Pods-Hashbrown.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hashbrown.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hashbrown/Pods-Hashbrown.debug.xcconfig"; sourceTree = "<group>"; };
+		AB7D1E4214B99D4A4597D895 /* Pods_Hashbrown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hashbrown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC8B446B3A37610ABDC409B3 /* Pods-Hashbrown.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hashbrown.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hashbrown/Pods-Hashbrown.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4E20E9C325DC279745B0106 /* Pods_Hashbrown.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,12 +61,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F27D731058370E134379B12 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AB7D1E4214B99D4A4597D895 /* Pods_Hashbrown.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3AFD0BCB0BE06C8096270013 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7F17B03DCE720C75B60AAF0B /* Pods-Hashbrown.debug.xcconfig */,
+				BC8B446B3A37610ABDC409B3 /* Pods-Hashbrown.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		63D7BEAA1D77B9FE00EC2469 = {
 			isa = PBXGroup;
 			children = (
 				63D7BEB51D77B9FE00EC2469 /* Hashbrown */,
 				63D7BECA1D77B9FF00EC2469 /* HashbrownTests */,
 				63D7BEB41D77B9FE00EC2469 /* Products */,
+				3AFD0BCB0BE06C8096270013 /* Pods */,
+				1F27D731058370E134379B12 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,9 +127,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 63D7BED01D77B9FF00EC2469 /* Build configuration list for PBXNativeTarget "Hashbrown" */;
 			buildPhases = (
+				8C1391CB0A8062DE7D22FA7E /* [CP] Check Pods Manifest.lock */,
 				63D7BEAF1D77B9FE00EC2469 /* Sources */,
 				63D7BEB01D77B9FE00EC2469 /* Frameworks */,
 				63D7BEB11D77B9FE00EC2469 /* Resources */,
+				EB65A970B06EFF1215FE9C71 /* [CP] Embed Pods Frameworks */,
+				AEC41D7CA964436593B7AB68 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -191,6 +218,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8C1391CB0A8062DE7D22FA7E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AEC41D7CA964436593B7AB68 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Hashbrown/Pods-Hashbrown-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB65A970B06EFF1215FE9C71 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Hashbrown/Pods-Hashbrown-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		63D7BEAF1D77B9FE00EC2469 /* Sources */ = {
@@ -327,6 +402,7 @@
 		};
 		63D7BED11D77B9FF00EC2469 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F17B03DCE720C75B60AAF0B /* Pods-Hashbrown.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Hashbrown/Info.plist;
@@ -338,6 +414,7 @@
 		};
 		63D7BED21D77B9FF00EC2469 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC8B446B3A37610ABDC409B3 /* Pods-Hashbrown.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Hashbrown/Info.plist;
@@ -390,6 +467,7 @@
 				63D7BED21D77B9FF00EC2469 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		63D7BED31D77B9FF00EC2469 /* Build configuration list for PBXNativeTarget "HashbrownTests" */ = {
 			isa = XCConfigurationList;
@@ -398,6 +476,7 @@
 				63D7BED51D77B9FF00EC2469 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

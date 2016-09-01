@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "63D7BEB21D77B9FE00EC2469"
-               BuildableName = "Hashbrown.app"
-               BlueprintName = "Hashbrown"
-               ReferencedContainer = "container:Hashbrown.xcodeproj">
+               BlueprintIdentifier = "07F8E4CADA31848F8AD40ED06AFFCAA5"
+               BuildableName = "Pods_Hashbrown.framework"
+               BlueprintName = "Pods-Hashbrown"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,26 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "63D7BEC61D77B9FF00EC2469"
-               BuildableName = "HashbrownTests.xctest"
-               BlueprintName = "HashbrownTests"
-               ReferencedContainer = "container:Hashbrown.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "63D7BEB21D77B9FE00EC2469"
-            BuildableName = "Hashbrown.app"
-            BlueprintName = "Hashbrown"
-            ReferencedContainer = "container:Hashbrown.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -61,16 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "63D7BEB21D77B9FE00EC2469"
-            BuildableName = "Hashbrown.app"
-            BlueprintName = "Hashbrown"
-            ReferencedContainer = "container:Hashbrown.xcodeproj">
+            BlueprintIdentifier = "07F8E4CADA31848F8AD40ED06AFFCAA5"
+            BuildableName = "Pods_Hashbrown.framework"
+            BlueprintName = "Pods-Hashbrown"
+            ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -80,16 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "63D7BEB21D77B9FE00EC2469"
-            BuildableName = "Hashbrown.app"
-            BlueprintName = "Hashbrown"
-            ReferencedContainer = "container:Hashbrown.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
