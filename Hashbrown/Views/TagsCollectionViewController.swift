@@ -38,7 +38,7 @@ class TagsCollectionViewController: UIViewController {
         collectionView.dataSource = self
         registerTagCollectionViewCellNib()
 
-        print("Loaded TagsCollectionViewController with auth token \(viewModel.authToken)")
+        log.debug("Loaded TagsCollectionViewController with auth token \(viewModel.authToken)")
         reloadData()
     }
 
@@ -52,7 +52,6 @@ class TagsCollectionViewController: UIViewController {
         instagramService.authorize { [weak self] token in
             self?.instagramService.searchForTags("hamilton") { [weak self] result in
                 guard let `self` = self else { return }
-                print(result)
                 if let result = result {
                     self.tags = result
                     self.collectionView.reloadData()
@@ -95,7 +94,7 @@ extension TagsCollectionViewController: UICollectionViewDataSource {
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(TagCollectionViewCell.reuseIdentifier, forIndexPath: indexPath) as? TagCollectionViewCell else {
-            print("ERROR: Could not dequeue TagCollectionViewCell")
+            log.error("Could not dequeue TagCollectionViewCell")
             return TagCollectionViewCell()
         }
 

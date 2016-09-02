@@ -4,7 +4,8 @@ use_frameworks!
 
 target 'Hashbrown' do
   pod 'Alamofire', '~> 3.4'
-  pod 'SwiftyJSON'
   pod 'HanekeSwift'
   pod 'SimpleAuth/Instagram'
+  pod 'SwiftyBeaver'
+  pod 'SwiftyJSON'
 end

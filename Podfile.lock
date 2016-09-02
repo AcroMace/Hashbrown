@@ -12,12 +12,14 @@ PODS:
     - ReactiveCocoa
   - SimpleAuth/Instagram (0.3.9):
     - SimpleAuth/Core
+  - SwiftyBeaver (0.6.5)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
   - Alamofire (~> 3.4)
   - HanekeSwift
   - SimpleAuth/Instagram
+  - SwiftyBeaver
   - SwiftyJSON
 
 SPEC CHECKSUMS:
@@ -28,8 +30,9 @@ SPEC CHECKSUMS:
   ReactiveCocoa: 5a42745f11ea236f405bb9ce5e97c5e3b23562dd
   Result: 18e1a7597fbcca5923c565b40a25a98afafdee02
   SimpleAuth: bc7d594f90711a7e6ef7624dce5aa8c8b09770ab
+  SwiftyBeaver: 1f7e6378e75bae631bb219fa0a351ce6f34a40da
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: 3148126f776c6f716cb4f2356466e5d9de1db789
+PODFILE CHECKSUM: 43c2a9d7afc7b32a501e7634d7ac4857397bd2a5
 
 COCOAPODS: 1.0.1

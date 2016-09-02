@@ -21,7 +21,7 @@ struct InstagramTag {
      */
     static func parseFromJSON(json: JSON) -> [InstagramTag]? {
         guard let tagList = json["data"].array else {
-            print("ERROR: Could not parse list of tags from JSON \(json)")
+            log.error("Could not parse list of tags from JSON \(json)")
             return nil
         }
 

@@ -6,10 +6,10 @@
 //  Copyright © 2016 Andy Cho. All rights reserved.
 //
 
-import SimpleAuth
 import Alamofire
-import SwiftyJSON
 import Haneke
+import SimpleAuth
+import SwiftyJSON
 
 private enum InstagramURL: String {
     case TagSearch = "v1/tags/search"
@@ -57,7 +57,7 @@ class InstagramService {
         SimpleAuth.authorize(provider, options: options) { [weak self] response, error in
             guard let `self` = self else { return }
             guard let authToken = JSON(response)["credentials"]["token"].string else {
-                print("ERROR: Could not fetch auth token from Instagram")
+                log.error("Could not fetch auth token from Instagram")
                 return
             }
 
@@ -76,27 +76,27 @@ class InstagramService {
      */
     func searchForTags(query: String, callback: ([InstagramTag]? -> Void)) {
         guard let `authToken` = authToken else {
-            print("ERROR: Attempted to search Instagram without being authorized")
+            log.error("Attempted to search Instagram without being authorized")
             return
         }
 
         let parameters = ["q": query, "access_token": authToken]
         guard let url = constructURL(.TagSearch, parameters: parameters) else {
-            print("ERROR: Could not construct searchForTags URL")
+            log.error("Could not construct searchForTags URL")
             return
         }
 
         cache.fetch(key: url)
             .onSuccess({ data in
-                print("Cache hit for \(url)")
+                log.debug("Cache hit for \(url)")
                 guard let tags = InstagramTag.parseFromJSON(JSON(data: data)) else {
-                    print("ERROR: Unexpected format returned from cache \(url)")
+                    log.error("Unexpected format returned from cache \(url)")
                     return
                 }
                 callback(tags)
             })
             .onFailure({ [weak self] _ in
-                print("Cache miss for \(url)")
+                log.debug("Cache miss for \(url)")
                 self?.searchForTagsNetwork(url, callback: callback)
             })
     }
@@ -116,7 +116,7 @@ class InstagramService {
                 switch response.result {
                 case .Success:
                     guard let value = response.result.value else {
-                        print("ERROR: Server returned nil while searching for tags \(url)")
+                        log.error("Server returned nil while searching for tags \(url)")
                         return
                     }
                     // Parse it
@@ -131,7 +131,7 @@ class InstagramService {
                         }
                     }
                 case .Failure(let error):
-                    print(error)
+                    log.error(error)
                 }
         }
     }
@@ -152,11 +152,11 @@ class InstagramService {
      */
     private func cacheJSON(key: String, json: SwiftyJSON.JSON) {
         guard let data = try? json.rawData() else {
-            print("ERROR: Failed to cache JSON for key \(key)")
+            log.error("Failed to cache JSON for key \(key)")
             return
         }
         cache.set(value: data, key: key) { result in
-            print("Successfully cached JSON for \(key)")
+            log.debug("Successfully cached JSON for \(key)")
         }
     }
 }
