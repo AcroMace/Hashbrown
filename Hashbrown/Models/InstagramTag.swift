@@ -17,7 +17,7 @@ struct InstagramTag {
 
      - parameter json: JSON returned from a tag search
 
-     - returns: A parsed list of tags
+     - returns: A parsed list of tags, `nil` if the parsing failed
      */
     static func parseFromJSON(json: JSON) -> [InstagramTag]? {
         guard let tagList = json["data"].array else {
@@ -27,6 +27,7 @@ struct InstagramTag {
 
         return tagList.flatMap { tagJSON in
             guard let name = tagJSON["name"].string, mediaCount = tagJSON["media_count"].int else {
+                log.warning("Could not parse tag from JSON: \(json)")
                 return nil
             }
             return InstagramTag(name: name, mediaCount: mediaCount)

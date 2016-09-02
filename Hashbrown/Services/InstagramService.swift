@@ -11,8 +11,18 @@ import Haneke
 import SimpleAuth
 import SwiftyJSON
 
-private enum InstagramURL: String {
-    case TagSearch = "v1/tags/search"
+private enum InstagramURL {
+    case TagSearch
+    case ImagesForTag(tag: String)
+
+    func path() -> String {
+        switch self {
+        case .TagSearch:
+            return "v1/tags/search"
+        case .ImagesForTag(let tag):
+            return "v1/tags/\(tag)/media/recent"
+        }
+    }
 }
 
 class InstagramService {
@@ -101,6 +111,49 @@ class InstagramService {
             })
     }
 
+    func imagesForTag(tag: String) {
+        guard let `authToken` = authToken else {
+            log.error("Attempted to search Instagram without being authorized")
+            return
+        }
+
+        let parameters = ["access_token": authToken]
+        guard let url = constructURL(.ImagesForTag(tag: tag), parameters: parameters) else {
+            log.error("Could not construct getImagesForTag URL")
+            return
+        }
+
+        cache.fetch(key: url)
+            .onSuccess({ data in
+                log.debug("Cache hit for \(url)")
+            })
+            .onFailure({ [weak self] _ in
+                log.debug("Cache miss for \(url)")
+                self?.imagesForTagNetwork(url)
+            })
+    }
+
+    /**
+     Construct a URL string from the URL type
+
+     - parameter url:        Type of the URL being constructed
+     - parameter parameters: Query parameters for the URL
+
+     - returns: The URL to query
+     */
+    private func constructURL(url: InstagramURL, parameters: [String: String]) -> String? {
+        let urlComponents = NSURLComponents(string: InstagramService.baseURL + url.path())
+        let queryItems = parameters.map { NSURLQueryItem(name: $0, value: $1) }
+        urlComponents?.queryItems = queryItems
+        return urlComponents?.URL?.absoluteString
+    }
+
+}
+
+// MARK: Network calls
+
+extension InstagramService {
+
     /**
      Search for Instagram tags from the network
      Saves the result to cache if successful
@@ -119,7 +172,6 @@ class InstagramService {
                         log.error("Server returned nil while searching for tags \(url)")
                         return
                     }
-                    // Parse it
                     dispatch_background {
                         // Parse the JSON in the background
                         let json = JSON(value)
@@ -136,12 +188,27 @@ class InstagramService {
         }
     }
 
-    /// Construct a URL string from the URL type
-    private func constructURL(url: InstagramURL, parameters: [String: String]) -> String? {
-        let urlComponents = NSURLComponents(string: InstagramService.baseURL + url.rawValue)
-        let queryItems = parameters.map { NSURLQueryItem(name: $0, value: $1) }
-        urlComponents?.queryItems = queryItems
-        return urlComponents?.URL?.absoluteString
+    private func imagesForTagNetwork(url: String) {
+        Alamofire.request(.GET, url)
+            .validate()
+            .responseJSON { [weak self] response in
+                guard let `self` = self else { return }
+                switch response.result {
+                case .Success:
+                    guard let value = response.result.value else {
+                        log.error("Server returned nil while getting images for tag \(url)")
+                        return
+                    }
+                    dispatch_background {
+                        // Parse the JSON in the background
+                        let json = JSON(value)
+                        let parsed = InstagramPost.parseFromJSON(json)
+                        print(parsed)
+                    }
+                case .Failure(let error):
+                    log.error(error)
+                }
+        }
     }
 
     /**
@@ -159,4 +226,5 @@ class InstagramService {
             log.debug("Successfully cached JSON for \(key)")
         }
     }
+
 }

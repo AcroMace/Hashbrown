@@ -50,13 +50,15 @@ class TagsCollectionViewController: UIViewController {
 
     private func reloadData() {
         instagramService.authorize { [weak self] token in
-            self?.instagramService.searchForTags("hamilton") { [weak self] result in
+            guard let `self` = self else { return }
+            self.instagramService.searchForTags("hamilton") { [weak self] result in
                 guard let `self` = self else { return }
                 if let result = result {
                     self.tags = result
                     self.collectionView.reloadData()
                 }
             }
+            self.instagramService.imagesForTag("polymerclay")
         }
     }
 }
