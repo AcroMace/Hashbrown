@@ -8,7 +8,7 @@
         <!--Authorize View Controller-->
         <scene sceneID="07l-S5-VZ5">
             <objects>
-                <viewController id="bDj-84-kbC" customClass="AuthorizeViewController" customModule="Hashbrown" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthorizeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bDj-84-kbC" customClass="AuthorizeViewController" customModule="Hashbrown" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="08e-Qf-H0b"/>
                         <viewControllerLayoutGuide type="bottom" id="6CX-Lx-6Et"/>

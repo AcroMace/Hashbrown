@@ -13,6 +13,8 @@
 		633DC3281D78FFC1000CC4DF /* TagsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633DC3271D78FFC1000CC4DF /* TagsCollectionViewController.swift */; };
 		633DC32A1D78FFD2000CC4DF /* TagsCollectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 633DC3291D78FFD2000CC4DF /* TagsCollectionViewController.storyboard */; };
 		633DC32C1D79028B000CC4DF /* AuthorizeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 633DC32B1D79028B000CC4DF /* AuthorizeViewController.storyboard */; };
+		633DC3311D79075F000CC4DF /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633DC3301D79075F000CC4DF /* TagCollectionViewCell.swift */; };
+		633DC3331D790770000CC4DF /* TagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633DC3321D790770000CC4DF /* TagCollectionViewCell.xib */; };
 		63D7BEB71D77B9FE00EC2469 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BEB61D77B9FE00EC2469 /* AppDelegate.swift */; };
 		63D7BEBE1D77B9FE00EC2469 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63D7BEBD1D77B9FE00EC2469 /* Assets.xcassets */; };
 		63D7BEC11D77B9FE00EC2469 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D7BEBF1D77B9FE00EC2469 /* LaunchScreen.storyboard */; };
@@ -37,6 +39,8 @@
 		633DC3271D78FFC1000CC4DF /* TagsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagsCollectionViewController.swift; path = Views/TagsCollectionViewController.swift; sourceTree = "<group>"; };
 		633DC3291D78FFD2000CC4DF /* TagsCollectionViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = TagsCollectionViewController.storyboard; path = Views/TagsCollectionViewController.storyboard; sourceTree = "<group>"; };
 		633DC32B1D79028B000CC4DF /* AuthorizeViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = AuthorizeViewController.storyboard; path = Views/AuthorizeViewController.storyboard; sourceTree = "<group>"; };
+		633DC3301D79075F000CC4DF /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagCollectionViewCell.swift; path = Views/TagCollectionViewCell.swift; sourceTree = "<group>"; };
+		633DC3321D790770000CC4DF /* TagCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TagCollectionViewCell.xib; path = Views/TagCollectionViewCell.xib; sourceTree = "<group>"; };
 		63D7BEB31D77B9FE00EC2469 /* Hashbrown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hashbrown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63D7BEB61D77B9FE00EC2469 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63D7BEBD1D77B9FE00EC2469 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,6 +115,8 @@
 				633DC3201D78FCF0000CC4DF /* AuthorizeViewController.swift */,
 				633DC3291D78FFD2000CC4DF /* TagsCollectionViewController.storyboard */,
 				633DC3271D78FFC1000CC4DF /* TagsCollectionViewController.swift */,
+				633DC3321D790770000CC4DF /* TagCollectionViewCell.xib */,
+				633DC3301D79075F000CC4DF /* TagCollectionViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -243,6 +249,7 @@
 			files = (
 				633DC32A1D78FFD2000CC4DF /* TagsCollectionViewController.storyboard in Resources */,
 				63D7BEC11D77B9FE00EC2469 /* LaunchScreen.storyboard in Resources */,
+				633DC3331D790770000CC4DF /* TagCollectionViewCell.xib in Resources */,
 				633DC32C1D79028B000CC4DF /* AuthorizeViewController.storyboard in Resources */,
 				63D7BEBE1D77B9FE00EC2469 /* Assets.xcassets in Resources */,
 			);
@@ -327,6 +334,7 @@
 				633DC31E1D78F5F7000CC4DF /* InstagramService.swift in Sources */,
 				633DC3211D78FCF0000CC4DF /* AuthorizeViewController.swift in Sources */,
 				633DC3281D78FFC1000CC4DF /* TagsCollectionViewController.swift in Sources */,
+				633DC3311D79075F000CC4DF /* TagCollectionViewCell.swift in Sources */,
 				63D7BEB71D77B9FE00EC2469 /* AppDelegate.swift in Sources */,
 				633DC31C1D78F448000CC4DF /* Constants.swift in Sources */,
 			);
