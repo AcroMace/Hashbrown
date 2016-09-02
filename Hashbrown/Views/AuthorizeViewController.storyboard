@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="c19-jf-T2o">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Authorize View Controller-->
+        <scene sceneID="07l-S5-VZ5">
+            <objects>
+                <viewController id="bDj-84-kbC" customClass="AuthorizeViewController" customModule="Hashbrown" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="08e-Qf-H0b"/>
+                        <viewControllerLayoutGuide type="bottom" id="6CX-Lx-6Et"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vUx-GT-TnM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEY-O4-KZy">
+                                <rect key="frame" x="215" y="285" width="171" height="30"/>
+                                <state key="normal" title="Authorize with Instagram"/>
+                                <connections>
+                                    <action selector="authorizeWithInstagram:" destination="bDj-84-kbC" eventType="touchUpInside" id="Jga-kB-ZSB"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="WEY-O4-KZy" firstAttribute="centerY" secondItem="vUx-GT-TnM" secondAttribute="centerY" id="DAe-2N-YPD"/>
+                            <constraint firstItem="WEY-O4-KZy" firstAttribute="centerX" secondItem="vUx-GT-TnM" secondAttribute="centerX" id="y2A-cI-CnN"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ezP-yW-uTQ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="scS-4a-yef" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2117" y="-365"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="JNe-hM-q7M">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="c19-jf-T2o" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wpt-po-YsB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bDj-84-kbC" kind="relationship" relationship="rootViewController" id="DBK-yH-a5f"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zXa-p8-IO7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1305" y="-365"/>
+        </scene>
+    </scenes>
+</document>

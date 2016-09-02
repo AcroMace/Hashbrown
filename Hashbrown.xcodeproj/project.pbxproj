@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		633DC31C1D78F448000CC4DF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633DC31B1D78F448000CC4DF /* Constants.swift */; };
 		633DC31E1D78F5F7000CC4DF /* InstagramService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633DC31D1D78F5F7000CC4DF /* InstagramService.swift */; };
+		633DC3211D78FCF0000CC4DF /* AuthorizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633DC3201D78FCF0000CC4DF /* AuthorizeViewController.swift */; };
+		633DC3281D78FFC1000CC4DF /* TagsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633DC3271D78FFC1000CC4DF /* TagsCollectionViewController.swift */; };
+		633DC32A1D78FFD2000CC4DF /* TagsCollectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 633DC3291D78FFD2000CC4DF /* TagsCollectionViewController.storyboard */; };
+		633DC32C1D79028B000CC4DF /* AuthorizeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 633DC32B1D79028B000CC4DF /* AuthorizeViewController.storyboard */; };
 		63D7BEB71D77B9FE00EC2469 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BEB61D77B9FE00EC2469 /* AppDelegate.swift */; };
-		63D7BEB91D77B9FE00EC2469 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BEB81D77B9FE00EC2469 /* ViewController.swift */; };
-		63D7BEBC1D77B9FE00EC2469 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D7BEBA1D77B9FE00EC2469 /* Main.storyboard */; };
 		63D7BEBE1D77B9FE00EC2469 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63D7BEBD1D77B9FE00EC2469 /* Assets.xcassets */; };
 		63D7BEC11D77B9FE00EC2469 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D7BEBF1D77B9FE00EC2469 /* LaunchScreen.storyboard */; };
 		63D7BECC1D77B9FF00EC2469 /* HashbrownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BECB1D77B9FF00EC2469 /* HashbrownTests.swift */; };
@@ -31,10 +33,12 @@
 /* Begin PBXFileReference section */
 		633DC31B1D78F448000CC4DF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		633DC31D1D78F5F7000CC4DF /* InstagramService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InstagramService.swift; path = Services/InstagramService.swift; sourceTree = "<group>"; };
+		633DC3201D78FCF0000CC4DF /* AuthorizeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorizeViewController.swift; path = Views/AuthorizeViewController.swift; sourceTree = "<group>"; };
+		633DC3271D78FFC1000CC4DF /* TagsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagsCollectionViewController.swift; path = Views/TagsCollectionViewController.swift; sourceTree = "<group>"; };
+		633DC3291D78FFD2000CC4DF /* TagsCollectionViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = TagsCollectionViewController.storyboard; path = Views/TagsCollectionViewController.storyboard; sourceTree = "<group>"; };
+		633DC32B1D79028B000CC4DF /* AuthorizeViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = AuthorizeViewController.storyboard; path = Views/AuthorizeViewController.storyboard; sourceTree = "<group>"; };
 		63D7BEB31D77B9FE00EC2469 /* Hashbrown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hashbrown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63D7BEB61D77B9FE00EC2469 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		63D7BEB81D77B9FE00EC2469 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		63D7BEBB1D77B9FE00EC2469 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		63D7BEBD1D77B9FE00EC2469 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63D7BEC01D77B9FE00EC2469 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63D7BEC21D77B9FE00EC2469 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -100,6 +104,17 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
+		633DC3221D78FCF4000CC4DF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				633DC32B1D79028B000CC4DF /* AuthorizeViewController.storyboard */,
+				633DC3201D78FCF0000CC4DF /* AuthorizeViewController.swift */,
+				633DC3291D78FFD2000CC4DF /* TagsCollectionViewController.storyboard */,
+				633DC3271D78FFC1000CC4DF /* TagsCollectionViewController.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		63D7BEAA1D77B9FE00EC2469 = {
 			isa = PBXGroup;
 			children = (
@@ -123,11 +138,10 @@
 		63D7BEB51D77B9FE00EC2469 /* Hashbrown */ = {
 			isa = PBXGroup;
 			children = (
-				633DC31B1D78F448000CC4DF /* Constants.swift */,
-				633DC31F1D78F60E000CC4DF /* Services */,
 				63D7BEB61D77B9FE00EC2469 /* AppDelegate.swift */,
-				63D7BEB81D77B9FE00EC2469 /* ViewController.swift */,
-				63D7BEBA1D77B9FE00EC2469 /* Main.storyboard */,
+				633DC31B1D78F448000CC4DF /* Constants.swift */,
+				633DC3221D78FCF4000CC4DF /* Views */,
+				633DC31F1D78F60E000CC4DF /* Services */,
 				633DC31A1D78F40C000CC4DF /* Supporting Files */,
 			);
 			path = Hashbrown;
@@ -226,9 +240,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				633DC32A1D78FFD2000CC4DF /* TagsCollectionViewController.storyboard in Resources */,
 				63D7BEC11D77B9FE00EC2469 /* LaunchScreen.storyboard in Resources */,
+				633DC32C1D79028B000CC4DF /* AuthorizeViewController.storyboard in Resources */,
 				63D7BEBE1D77B9FE00EC2469 /* Assets.xcassets in Resources */,
-				63D7BEBC1D77B9FE00EC2469 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,7 +310,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				633DC31E1D78F5F7000CC4DF /* InstagramService.swift in Sources */,
-				63D7BEB91D77B9FE00EC2469 /* ViewController.swift in Sources */,
+				633DC3211D78FCF0000CC4DF /* AuthorizeViewController.swift in Sources */,
+				633DC3281D78FFC1000CC4DF /* TagsCollectionViewController.swift in Sources */,
 				63D7BEB71D77B9FE00EC2469 /* AppDelegate.swift in Sources */,
 				633DC31C1D78F448000CC4DF /* Constants.swift in Sources */,
 			);
@@ -320,14 +336,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		63D7BEBA1D77B9FE00EC2469 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				63D7BEBB1D77B9FE00EC2469 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		63D7BEBF1D77B9FE00EC2469 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
