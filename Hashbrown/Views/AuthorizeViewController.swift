@@ -9,7 +9,7 @@
 import UIKit
 
 class AuthorizeViewController: UIViewController {
-    let instagramService = InstagramService()
+    private let instagramService = InstagramService()
 
     override func viewDidLoad() {
         super.viewDidLoad()

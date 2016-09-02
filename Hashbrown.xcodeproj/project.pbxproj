@@ -19,6 +19,9 @@
 		63D7BEBE1D77B9FE00EC2469 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63D7BEBD1D77B9FE00EC2469 /* Assets.xcassets */; };
 		63D7BEC11D77B9FE00EC2469 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D7BEBF1D77B9FE00EC2469 /* LaunchScreen.storyboard */; };
 		63D7BECC1D77B9FF00EC2469 /* HashbrownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7BECB1D77B9FF00EC2469 /* HashbrownTests.swift */; };
+		63D816381D792BD300A4CD9C /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D816371D792BD300A4CD9C /* UserDefaults.swift */; };
+		63D8163A1D79334600A4CD9C /* InstagramTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D816391D79334600A4CD9C /* InstagramTag.swift */; };
+		63D8163D1D79416500A4CD9C /* DispatchHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D8163C1D79416500A4CD9C /* DispatchHelpers.swift */; };
 		D4E20E9C325DC279745B0106 /* Pods_Hashbrown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7D1E4214B99D4A4597D895 /* Pods_Hashbrown.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +52,9 @@
 		63D7BEC71D77B9FF00EC2469 /* HashbrownTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HashbrownTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63D7BECB1D77B9FF00EC2469 /* HashbrownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashbrownTests.swift; sourceTree = "<group>"; };
 		63D7BECD1D77B9FF00EC2469 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63D816371D792BD300A4CD9C /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDefaults.swift; path = Services/UserDefaults.swift; sourceTree = "<group>"; };
+		63D816391D79334600A4CD9C /* InstagramTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InstagramTag.swift; path = Models/InstagramTag.swift; sourceTree = "<group>"; };
+		63D8163C1D79416500A4CD9C /* DispatchHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DispatchHelpers.swift; path = Helpers/DispatchHelpers.swift; sourceTree = "<group>"; };
 		7F17B03DCE720C75B60AAF0B /* Pods-Hashbrown.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hashbrown.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hashbrown/Pods-Hashbrown.debug.xcconfig"; sourceTree = "<group>"; };
 		AB7D1E4214B99D4A4597D895 /* Pods_Hashbrown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hashbrown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC8B446B3A37610ABDC409B3 /* Pods-Hashbrown.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hashbrown.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hashbrown/Pods-Hashbrown.release.xcconfig"; sourceTree = "<group>"; };
@@ -103,6 +109,7 @@
 		633DC31F1D78F60E000CC4DF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				63D816371D792BD300A4CD9C /* UserDefaults.swift */,
 				633DC31D1D78F5F7000CC4DF /* InstagramService.swift */,
 			);
 			name = Services;
@@ -111,12 +118,8 @@
 		633DC3221D78FCF4000CC4DF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				633DC32B1D79028B000CC4DF /* AuthorizeViewController.storyboard */,
-				633DC3201D78FCF0000CC4DF /* AuthorizeViewController.swift */,
-				633DC3291D78FFD2000CC4DF /* TagsCollectionViewController.storyboard */,
-				633DC3271D78FFC1000CC4DF /* TagsCollectionViewController.swift */,
-				633DC3321D790770000CC4DF /* TagCollectionViewCell.xib */,
-				633DC3301D79075F000CC4DF /* TagCollectionViewCell.swift */,
+				63D816361D792B9500A4CD9C /* Authorize */,
+				63D816351D792B8B00A4CD9C /* Tags */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -146,8 +149,10 @@
 			children = (
 				63D7BEB61D77B9FE00EC2469 /* AppDelegate.swift */,
 				633DC31B1D78F448000CC4DF /* Constants.swift */,
+				63D8163B1D79334B00A4CD9C /* Models */,
 				633DC3221D78FCF4000CC4DF /* Views */,
 				633DC31F1D78F60E000CC4DF /* Services */,
+				63D8163E1D79416800A4CD9C /* Helpers */,
 				633DC31A1D78F40C000CC4DF /* Supporting Files */,
 			);
 			path = Hashbrown;
@@ -160,6 +165,42 @@
 				63D7BECD1D77B9FF00EC2469 /* Info.plist */,
 			);
 			path = HashbrownTests;
+			sourceTree = "<group>";
+		};
+		63D816351D792B8B00A4CD9C /* Tags */ = {
+			isa = PBXGroup;
+			children = (
+				633DC3291D78FFD2000CC4DF /* TagsCollectionViewController.storyboard */,
+				633DC3271D78FFC1000CC4DF /* TagsCollectionViewController.swift */,
+				633DC3321D790770000CC4DF /* TagCollectionViewCell.xib */,
+				633DC3301D79075F000CC4DF /* TagCollectionViewCell.swift */,
+			);
+			name = Tags;
+			sourceTree = "<group>";
+		};
+		63D816361D792B9500A4CD9C /* Authorize */ = {
+			isa = PBXGroup;
+			children = (
+				633DC32B1D79028B000CC4DF /* AuthorizeViewController.storyboard */,
+				633DC3201D78FCF0000CC4DF /* AuthorizeViewController.swift */,
+			);
+			name = Authorize;
+			sourceTree = "<group>";
+		};
+		63D8163B1D79334B00A4CD9C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				63D816391D79334600A4CD9C /* InstagramTag.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		63D8163E1D79416800A4CD9C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				63D8163C1D79416500A4CD9C /* DispatchHelpers.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,11 +373,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				633DC31E1D78F5F7000CC4DF /* InstagramService.swift in Sources */,
+				63D8163D1D79416500A4CD9C /* DispatchHelpers.swift in Sources */,
 				633DC3211D78FCF0000CC4DF /* AuthorizeViewController.swift in Sources */,
 				633DC3281D78FFC1000CC4DF /* TagsCollectionViewController.swift in Sources */,
 				633DC3311D79075F000CC4DF /* TagCollectionViewCell.swift in Sources */,
 				63D7BEB71D77B9FE00EC2469 /* AppDelegate.swift in Sources */,
+				63D816381D792BD300A4CD9C /* UserDefaults.swift in Sources */,
 				633DC31C1D78F448000CC4DF /* Constants.swift in Sources */,
+				63D8163A1D79334600A4CD9C /* InstagramTag.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

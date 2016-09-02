@@ -22,4 +22,8 @@ struct Constants {
         ]
     }
 
+    struct UserDefaults {
+        static let instagramAuthToken = "instagramAuthToken"
+    }
+
 }

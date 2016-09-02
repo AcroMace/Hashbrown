@@ -19,8 +19,10 @@ class TagsCollectionViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
+    private let instagramService = InstagramService()
+
     private var viewModel: TagsCollectionViewModel!
-    private var tags = ["abc", "def", "ghi"]
+    private var tags = [InstagramTag]()
 
     class func createInstance(authToken: String) -> TagsCollectionViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: NSBundle(forClass: TagsCollectionViewController.self))
@@ -37,7 +39,7 @@ class TagsCollectionViewController: UIViewController {
         registerTagCollectionViewCellNib()
 
         print("Loaded TagsCollectionViewController with auth token \(viewModel.authToken)")
-        collectionView.reloadData()
+        reloadData()
     }
 
     private func registerTagCollectionViewCellNib() {
@@ -46,6 +48,18 @@ class TagsCollectionViewController: UIViewController {
         collectionView.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }
 
+    private func reloadData() {
+        instagramService.authorize { [weak self] token in
+            self?.instagramService.searchForTags("hamilton") { [weak self] result in
+                guard let `self` = self else { return }
+                print(result)
+                if let result = result {
+                    self.tags = result
+                    self.collectionView.reloadData()
+                }
+            }
+        }
+    }
 }
 
 // MARK: UICollectionViewDelegate
@@ -89,7 +103,7 @@ extension TagsCollectionViewController: UICollectionViewDataSource {
         guard tags.count > indexPath.row else {
             return TagCollectionViewCell()
         }
-        let viewModel = TagCollectionCellViewModel(tag: tags[indexPath.row], imageURL: nil)
+        let viewModel = TagCollectionCellViewModel(tag: tags[indexPath.row].name, imageURL: nil)
         cell.configure(viewModel)
 
         return cell
