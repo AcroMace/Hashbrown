@@ -79,8 +79,12 @@ class InstagramService {
             print("ERROR: Attempted to search Instagram without being authorized")
             return
         }
+
         let parameters = ["q": query, "access_token": authToken]
-        let url = constructURL(.TagSearch)
+        guard let url = constructURL(.TagSearch, parameters: parameters) else {
+            print("ERROR: Could not construct searchForTags URL")
+            return
+        }
 
         cache.fetch(key: url)
             .onSuccess({ data in
@@ -93,12 +97,19 @@ class InstagramService {
             })
             .onFailure({ [weak self] _ in
                 print("Cache miss for \(url)")
-                self?.searchForTagsNetwork(url, parameters: parameters, callback: callback)
+                self?.searchForTagsNetwork(url, callback: callback)
             })
     }
 
-    private func searchForTagsNetwork(url: String, parameters: [String: String], callback: ([InstagramTag]? -> Void)) {
-        Alamofire.request(.GET, url, parameters: parameters)
+    /**
+     Search for Instagram tags from the network
+     Saves the result to cache if successful
+
+     - parameter url:      URL string constructed from `constructURL`
+     - parameter callback: Callback with a list of tags
+     */
+    private func searchForTagsNetwork(url: String, callback: ([InstagramTag]? -> Void)) {
+        Alamofire.request(.GET, url)
             .validate()
             .responseJSON { [weak self] response in
                 guard let `self` = self else { return }
@@ -125,11 +136,20 @@ class InstagramService {
         }
     }
 
-    // Construct a URL string from the URL type
-    private func constructURL(url: InstagramURL) -> String {
-        return InstagramService.baseURL + url.rawValue
+    /// Construct a URL string from the URL type
+    private func constructURL(url: InstagramURL, parameters: [String: String]) -> String? {
+        let urlComponents = NSURLComponents(string: InstagramService.baseURL + url.rawValue)
+        let queryItems = parameters.map { NSURLQueryItem(name: $0, value: $1) }
+        urlComponents?.queryItems = queryItems
+        return urlComponents?.URL?.absoluteString
     }
 
+    /**
+     Cache a JSON instance
+
+     - parameter key:  The string key (ex. URL)
+     - parameter json: The JSON object to save
+     */
     private func cacheJSON(key: String, json: SwiftyJSON.JSON) {
         guard let data = try? json.rawData() else {
             print("ERROR: Failed to cache JSON for key \(key)")
