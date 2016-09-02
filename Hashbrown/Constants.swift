@@ -9,7 +9,7 @@
 struct Constants {
 
     struct Instagram {
-        static let simpleAuthCategory = "instagram"
+        static let simpleAuthProvider = "instagram"
         static let clientID = "a11d750426144ae6a8bb25c79afae138"
         static let redirectURI = "https://acromace.com"
         static let oauthScope = [

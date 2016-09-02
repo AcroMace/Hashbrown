@@ -15,7 +15,7 @@ class InstagramService {
 
     init() {
         // Initialize SimpleAuth for Instagram authorization
-        SimpleAuth.configuration()[Constants.Instagram.simpleAuthCategory] = [
+        SimpleAuth.configuration()[Constants.Instagram.simpleAuthProvider] = [
             "client_id": Constants.Instagram.clientID,
             SimpleAuthRedirectURIKey: Constants.Instagram.redirectURI
         ]
@@ -33,8 +33,9 @@ class InstagramService {
             return
         }
 
+        let provider = Constants.Instagram.simpleAuthProvider
         let options = ["scope": Constants.Instagram.oauthScope]
-        SimpleAuth.authorize(Constants.Instagram.simpleAuthCategory, options: options) { [weak self] response, error in
+        SimpleAuth.authorize(provider, options: options) { [weak self] response, error in
             guard let `self` = self else { return }
             guard let authToken = JSON(response)["credentials"]["token"].string else {
                 print("ERROR: Could not fetch auth token from Instagram")
