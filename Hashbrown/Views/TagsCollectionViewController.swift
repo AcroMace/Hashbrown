@@ -8,10 +8,6 @@
 
 import UIKit
 
-struct TagsCollectionViewModel {
-    let authToken: String
-}
-
 class TagsCollectionViewController: UIViewController {
 
     static let storyboardName = String(TagsCollectionViewController)
@@ -20,14 +16,11 @@ class TagsCollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     private let instagramService = InstagramService()
-
-    private var viewModel: TagsCollectionViewModel!
     private var tags = [InstagramTag]()
 
-    class func createInstance(authToken: String) -> TagsCollectionViewController {
+    class func createInstance() -> TagsCollectionViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: NSBundle(forClass: TagsCollectionViewController.self))
         let instance = storyboard.instantiateInitialViewController() as! TagsCollectionViewController
-        instance.viewModel = TagsCollectionViewModel(authToken: authToken)
         return instance
     }
 
@@ -38,7 +31,6 @@ class TagsCollectionViewController: UIViewController {
         collectionView.dataSource = self
         registerTagCollectionViewCellNib()
 
-        log.debug("Loaded TagsCollectionViewController with auth token \(viewModel.authToken)")
         reloadData()
     }
 
@@ -49,16 +41,11 @@ class TagsCollectionViewController: UIViewController {
     }
 
     private func reloadData() {
-        instagramService.authorize { [weak self] token in
+        instagramService.searchForTags("hamilton") { [weak self] result in
             guard let `self` = self else { return }
-            self.instagramService.searchForTags("hamilton") { [weak self] result in
-                guard let `self` = self else { return }
-                if let result = result {
-                    self.tags = result
-                    self.collectionView.reloadData()
-                }
-            }
-            self.instagramService.imagesForTag("polymerclay")
+            guard let `result` = result else { return }
+            self.tags = result
+            self.collectionView.reloadData()
         }
     }
 }
@@ -80,6 +67,16 @@ extension TagsCollectionViewController: UICollectionViewDelegate {
         return true
     }
 
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        guard indexPath.row < tags.count else {
+            log.error("Tapped a cell that was out of range")
+            return
+        }
+
+        let tag = tags[indexPath.row]
+        let postsCollectionVC = PostsCollectionViewController.createInstance(tag.name)
+        navigationController?.pushViewController(postsCollectionVC, animated: true)
+    }
 }
 
 // MARK: UICollectionViewDataSource

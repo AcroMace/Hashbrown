@@ -9,6 +9,7 @@
 import UIKit
 
 class AuthorizeViewController: UIViewController {
+
     private let instagramService = InstagramService()
 
     override func viewDidLoad() {
@@ -17,7 +18,7 @@ class AuthorizeViewController: UIViewController {
 
     @IBAction func authorizeWithInstagram(sender: AnyObject) {
         instagramService.authorize { [weak self] authToken in
-            let tagsCollectionVC = TagsCollectionViewController.createInstance(authToken)
+            let tagsCollectionVC = TagsCollectionViewController.createInstance()
             self?.navigationController?.pushViewController(tagsCollectionVC, animated: true)
         }
     }

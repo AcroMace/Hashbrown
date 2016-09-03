@@ -25,4 +25,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let console = ConsoleDestination()
         log.addDestination(console)
     }
+
 }

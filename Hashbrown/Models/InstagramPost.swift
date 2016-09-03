@@ -9,6 +9,7 @@
 import SwiftyJSON
 
 struct InstagramPost {
+
     let postID: String
     let createdTime: NSDate
     let caption: String
@@ -83,4 +84,5 @@ struct InstagramPost {
             user: user,
             location: location)
     }
+
 }

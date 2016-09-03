@@ -9,6 +9,7 @@
 import SwiftyJSON
 
 struct InstagramTag {
+
     let name: String
     let mediaCount: Int
 
@@ -33,4 +34,5 @@ struct InstagramTag {
             return InstagramTag(name: name, mediaCount: mediaCount)
         }
     }
+
 }

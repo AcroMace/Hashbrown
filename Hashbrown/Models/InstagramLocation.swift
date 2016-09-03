@@ -9,6 +9,7 @@
 import SwiftyJSON
 
 struct InstagramLocation {
+
     let locationID: String
     let name: String
     let latitude: Double
@@ -35,4 +36,5 @@ struct InstagramLocation {
 
         return InstagramLocation(locationID: String(id), name: name, latitude: latitude, longitude: longitude)
     }
+
 }

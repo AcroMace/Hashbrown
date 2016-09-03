@@ -9,6 +9,7 @@
 import SwiftyJSON
 
 struct InstagramUser {
+
     let username: String
     let userID: String
     let profilePicture: String
@@ -35,4 +36,5 @@ struct InstagramUser {
             profilePicture: profilePicture,
             fullName: fullName)
     }
+
 }

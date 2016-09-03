@@ -15,6 +15,7 @@ struct TagCollectionCellViewModel {
 }
 
 class TagCollectionViewCell: UICollectionViewCell {
+
     static let nibName = String(TagCollectionViewCell)
     static let reuseIdentifier = String(TagCollectionViewCell)
 
@@ -40,4 +41,5 @@ class TagCollectionViewCell: UICollectionViewCell {
             backgroundImageView.hnk_setImageFromURL(url)
         }
     }
+
 }
