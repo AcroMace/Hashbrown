@@ -1,43 +1,44 @@
 //
-//  TagsCollectionViewController.swift
+//  TagSearchViewController.swift
 //  Hashbrown
 //
-//  Created by Andy Cho on 2016-09-01.
+//  Created by Andy Cho on 2016-09-05.
 //  Copyright © 2016 Andy Cho. All rights reserved.
 //
 
 import UIKit
 
-class TagsCollectionViewController: UIViewController {
+class TagSearchViewController: UIViewController {
 
-    static let storyboardName = String(TagsCollectionViewController)
+    static let storyboardName = String(TagSearchViewController)
     static let numberOfColumns: CGFloat = 3
 
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
 
     private let instagramService = InstagramService()
     private var tags = [InstagramTag]()
 
-    class func createInstance() -> TagsCollectionViewController {
-        let storyboard = UIStoryboard(name: storyboardName, bundle: NSBundle(forClass: TagsCollectionViewController.self))
-        let instance = storyboard.instantiateInitialViewController() as! TagsCollectionViewController
+    class func createInstance() -> TagSearchViewController {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: NSBundle(forClass: TagSearchViewController.self))
+        let instance = storyboard.instantiateInitialViewController() as! TagSearchViewController
         return instance
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addPlusButton()
 
+        searchBar.delegate = self
         collectionView.delegate = self
         collectionView.dataSource = self
-        registerTagCollectionViewCellNib()
+        registerTagSearchCollectionViewCellNib()
 
         reloadData()
     }
 
-    private func registerTagCollectionViewCellNib() {
-        let nib = UINib(nibName: TagCollectionViewCell.nibName, bundle: nibBundle)
-        let reuseIdentifier = TagCollectionViewCell.reuseIdentifier
+    private func registerTagSearchCollectionViewCellNib() {
+        let nib = UINib(nibName: TagSearchCollectionViewCell.nibName, bundle: nibBundle)
+        let reuseIdentifier = TagSearchCollectionViewCell.reuseIdentifier
         collectionView.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }
 
@@ -50,23 +51,35 @@ class TagsCollectionViewController: UIViewController {
         }
     }
 
-    private func addPlusButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(openSearchView))
+}
+
+// MARK: TagSearchCollectionViewCellDelegate
+
+extension TagSearchViewController: TagSearchCollectionViewCellDelegate {
+
+    func didTapAddTagButton(tag: String) {
+        log.debug("Adding tag: \(tag)")
     }
 
-    @objc private func openSearchView() {
-        let searchVC = TagSearchViewController.createInstance()
-        navigationController?.pushViewController(searchVC, animated: true)
+}
+
+// MARK: UISearchBarDelegate
+
+extension TagSearchViewController: UISearchBarDelegate {
+
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        print("Search button clicked: \(searchBar.text)")
+        searchBar.resignFirstResponder()
     }
 
 }
 
 // MARK: UICollectionViewDelegate
 
-extension TagsCollectionViewController: UICollectionViewDelegate {
+extension TagSearchViewController: UICollectionViewDelegate {
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = floor(view.frame.width / TagsCollectionViewController.numberOfColumns)
+        let width = floor(view.frame.width / TagSearchViewController.numberOfColumns)
         return CGSize(width: width, height: width)
     }
 
@@ -85,15 +98,14 @@ extension TagsCollectionViewController: UICollectionViewDelegate {
         }
 
         let tag = tags[indexPath.row]
-        let postsCollectionVC = PostsCollectionViewController.createInstance(tag.name)
-        navigationController?.pushViewController(postsCollectionVC, animated: true)
+        log.debug("Added \(tag.name) to saved tags")
     }
 
 }
 
 // MARK: UICollectionViewDataSource
 
-extension TagsCollectionViewController: UICollectionViewDataSource {
+extension TagSearchViewController: UICollectionViewDataSource {
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -104,16 +116,19 @@ extension TagsCollectionViewController: UICollectionViewDataSource {
     }
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(TagCollectionViewCell.reuseIdentifier, forIndexPath: indexPath) as? TagCollectionViewCell else {
-            log.error("Could not dequeue TagCollectionViewCell")
-            return TagCollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(TagSearchCollectionViewCell.reuseIdentifier, forIndexPath: indexPath) as? TagSearchCollectionViewCell else {
+            log.error("Could not dequeue TagSearchCollectionViewCell")
+            return TagSearchCollectionViewCell()
         }
+        cell.delegate = self
 
         // Configure the cell
         guard tags.count > indexPath.row else {
-            return TagCollectionViewCell()
+            return TagSearchCollectionViewCell()
         }
-        let viewModel = TagCollectionCellViewModel(tag: tags[indexPath.row].name, imageURL: nil)
+
+        let tag = tags[indexPath.row]
+        let viewModel = TagSearchCollectionCellViewModel(tagName: tag.name, tagMediaCount: tag.mediaCount, imageURL: nil)
         cell.configure(viewModel)
 
         return cell

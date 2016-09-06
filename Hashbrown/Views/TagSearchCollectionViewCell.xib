@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TagSearchCollectionViewCell" customModule="Hashbrown" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WNC-M3-ypN">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#Tag" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FoR-z5-HgI">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
+                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                    <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                    <size key="shadowOffset" width="0.0" height="1"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNc-FZ-SJF">
+                    <rect key="frame" x="0.0" y="150" width="600" height="300"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                    <size key="titleShadowOffset" width="0.5" height="0.5"/>
+                    <state key="normal" title="Add">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="didTapAddButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="azH-fT-t6o"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1234 Posts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhX-ty-IAh">
+                    <rect key="frame" x="0.0" y="450" width="600" height="150"/>
+                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                    <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <size key="shadowOffset" width="0.0" height="1"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="gNc-FZ-SJF" firstAttribute="height" secondItem="WNC-M3-ypN" secondAttribute="height" multiplier="1:2" id="0Ln-qj-TG5"/>
+                <constraint firstItem="fhX-ty-IAh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="2n4-Vm-scU"/>
+                <constraint firstItem="fhX-ty-IAh" firstAttribute="height" secondItem="FoR-z5-HgI" secondAttribute="height" id="5F4-FT-jfG"/>
+                <constraint firstItem="WNC-M3-ypN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="72f-2h-aSb"/>
+                <constraint firstItem="gNc-FZ-SJF" firstAttribute="top" secondItem="FoR-z5-HgI" secondAttribute="bottom" id="8za-Ur-Ld7"/>
+                <constraint firstItem="FoR-z5-HgI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BOR-aD-0h0"/>
+                <constraint firstItem="fhX-ty-IAh" firstAttribute="top" secondItem="gNc-FZ-SJF" secondAttribute="bottom" id="Gqv-KN-vof"/>
+                <constraint firstAttribute="trailing" secondItem="WNC-M3-ypN" secondAttribute="trailing" id="IeA-Xc-LLg"/>
+                <constraint firstAttribute="trailing" secondItem="gNc-FZ-SJF" secondAttribute="trailing" id="Kzt-zn-w48"/>
+                <constraint firstAttribute="bottom" secondItem="fhX-ty-IAh" secondAttribute="bottom" id="Rem-87-GIi"/>
+                <constraint firstItem="FoR-z5-HgI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="WT2-lM-dF3"/>
+                <constraint firstItem="WNC-M3-ypN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="aXY-FZ-F2c"/>
+                <constraint firstAttribute="bottom" secondItem="WNC-M3-ypN" secondAttribute="bottom" id="dqe-I2-ohJ"/>
+                <constraint firstAttribute="trailing" secondItem="FoR-z5-HgI" secondAttribute="trailing" id="jAD-jl-TkL"/>
+                <constraint firstAttribute="trailing" secondItem="fhX-ty-IAh" secondAttribute="trailing" id="sHe-Am-4Aa"/>
+                <constraint firstItem="gNc-FZ-SJF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="uGl-yw-k1N"/>
+            </constraints>
+            <connections>
+                <outlet property="addButton" destination="gNc-FZ-SJF" id="y4O-kh-tnU"/>
+                <outlet property="imageView" destination="WNC-M3-ypN" id="huP-hU-gpj"/>
+                <outlet property="numberOfPostsLabel" destination="fhX-ty-IAh" id="Iov-xg-row"/>
+                <outlet property="tagLabel" destination="FoR-z5-HgI" id="RxN-DW-Wq4"/>
+            </connections>
+        </view>
+    </objects>
+</document>
