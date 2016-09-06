@@ -26,6 +26,7 @@ class TagsCollectionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        popTheNavigationStack()
         addPlusButton()
 
         collectionView.delegate = self
@@ -57,6 +58,13 @@ class TagsCollectionViewController: UIViewController {
     @objc private func openSearchView() {
         let searchVC = TagSearchViewController.createInstance()
         navigationController?.pushViewController(searchVC, animated: true)
+    }
+
+    private func popTheNavigationStack() {
+        // Pop the navigation stack so that we no longer have the back button
+        guard let thisViewController = navigationController?.viewControllers.last else { return }
+        navigationController?.viewControllers = [thisViewController]
+        navigationItem.hidesBackButton = true
     }
 
 }

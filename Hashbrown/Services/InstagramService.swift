@@ -46,20 +46,22 @@ class InstagramService {
     }
 
     /**
+     Check if the user is already authorized
+
+     - returns: True if the user is authorized, false if not
+     */
+    func isAuthorized() -> Bool {
+        return getCachedAuthToken() != nil
+    }
+
+    /**
      Authorize with Instagram and return the authorization token
 
      - parameter callback: Calls back with the Instagram auth token
      */
     func authorize(callback: (String -> Void)) {
-        // If we already fetched the token, just return it
-        if let authToken = InstagramService.authToken {
-            callback(authToken)
-            return
-        }
-
-        // See if it's saved in user defaults
-        if let authToken = UserDefaults.get(Constants.UserDefaults.instagramAuthToken) as? String {
-            InstagramService.authToken = authToken
+        // See if we already have the token cached (pre-fetched or in user defaults)
+        if let authToken = getCachedAuthToken() {
             callback(authToken)
             return
         }
@@ -67,7 +69,6 @@ class InstagramService {
         let provider = Constants.Instagram.simpleAuthProvider
         let options = ["scope": Constants.Instagram.oauthScope]
         SimpleAuth.authorize(provider, options: options) { [weak self] response, error in
-            guard let `self` = self else { return }
             guard let authToken = JSON(response)["credentials"]["token"].string else {
                 log.error("Could not fetch auth token from Instagram")
                 return
@@ -138,6 +139,28 @@ class InstagramService {
                 log.debug("Cache miss for \(url)")
                 self?.imagesForTagNetwork(url, callback: callback)
             })
+    }
+
+    // MARK: Private methods
+
+    /**
+     Check if the auth token is cached
+
+     - returns: Return the auth token if it exists, nil if not
+     */
+    private func getCachedAuthToken() -> String? {
+        // If we already fetched the token, just return it
+        if let authToken = InstagramService.authToken {
+            return authToken
+        }
+
+        // See if it's saved in user defaults
+        if let authToken = UserDefaults.get(Constants.UserDefaults.instagramAuthToken) as? String {
+            InstagramService.authToken = authToken
+            return authToken
+        }
+
+        return nil
     }
 
     /**

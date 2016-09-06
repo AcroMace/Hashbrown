@@ -14,13 +14,21 @@ class AuthorizeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if instagramService.isAuthorized() {
+            showTags(false)
+        }
     }
 
     @IBAction func authorizeWithInstagram(sender: AnyObject) {
         instagramService.authorize { [weak self] authToken in
-            let tagsCollectionVC = TagsCollectionViewController.createInstance()
-            self?.navigationController?.pushViewController(tagsCollectionVC, animated: true)
+            self?.showTags(true)
         }
+    }
+
+    private func showTags(animated: Bool) {
+        let tagsCollectionVC = TagsCollectionViewController.createInstance()
+        navigationController?.pushViewController(tagsCollectionVC, animated: animated)
     }
 
 }
