@@ -23,19 +23,6 @@
                     <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                     <size key="shadowOffset" width="0.0" height="1"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNc-FZ-SJF">
-                    <rect key="frame" x="0.0" y="150" width="600" height="300"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
-                    <size key="titleShadowOffset" width="0.5" height="0.5"/>
-                    <state key="normal" title="Add">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="didTapAddButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="azH-fT-t6o"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1234 Posts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhX-ty-IAh">
                     <rect key="frame" x="0.0" y="450" width="600" height="150"/>
                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
@@ -44,28 +31,59 @@
                     <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <size key="shadowOffset" width="0.0" height="1"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YiT-y2-cwB">
+                    <rect key="frame" x="0.0" y="150" width="600" height="300"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zlF-MW-ZaD">
+                            <rect key="frame" x="150" y="112" width="300" height="75"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuN-EV-qdR">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="75"/>
+                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="yuN-EV-qdR" secondAttribute="bottom" id="Vi2-Fw-wrO"/>
+                                <constraint firstAttribute="trailing" secondItem="yuN-EV-qdR" secondAttribute="trailing" id="fTx-xn-XFT"/>
+                                <constraint firstItem="yuN-EV-qdR" firstAttribute="leading" secondItem="zlF-MW-ZaD" secondAttribute="leading" id="h2e-Qe-IUl"/>
+                                <constraint firstItem="yuN-EV-qdR" firstAttribute="top" secondItem="zlF-MW-ZaD" secondAttribute="top" id="o9k-6m-HTX"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="zlF-MW-ZaD" firstAttribute="centerX" secondItem="YiT-y2-cwB" secondAttribute="centerX" id="5un-BR-c7E"/>
+                        <constraint firstItem="zlF-MW-ZaD" firstAttribute="centerY" secondItem="YiT-y2-cwB" secondAttribute="centerY" id="SbL-T2-PXK"/>
+                        <constraint firstItem="zlF-MW-ZaD" firstAttribute="width" secondItem="YiT-y2-cwB" secondAttribute="width" multiplier="1:2" id="Vk9-lH-d8h"/>
+                        <constraint firstItem="zlF-MW-ZaD" firstAttribute="height" secondItem="YiT-y2-cwB" secondAttribute="height" multiplier="1:4" id="f2d-ch-gph"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="gNc-FZ-SJF" firstAttribute="height" secondItem="WNC-M3-ypN" secondAttribute="height" multiplier="1:2" id="0Ln-qj-TG5"/>
                 <constraint firstItem="fhX-ty-IAh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="2n4-Vm-scU"/>
+                <constraint firstItem="YiT-y2-cwB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3Aw-g6-oZC"/>
                 <constraint firstItem="fhX-ty-IAh" firstAttribute="height" secondItem="FoR-z5-HgI" secondAttribute="height" id="5F4-FT-jfG"/>
                 <constraint firstItem="WNC-M3-ypN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="72f-2h-aSb"/>
-                <constraint firstItem="gNc-FZ-SJF" firstAttribute="top" secondItem="FoR-z5-HgI" secondAttribute="bottom" id="8za-Ur-Ld7"/>
                 <constraint firstItem="FoR-z5-HgI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BOR-aD-0h0"/>
-                <constraint firstItem="fhX-ty-IAh" firstAttribute="top" secondItem="gNc-FZ-SJF" secondAttribute="bottom" id="Gqv-KN-vof"/>
+                <constraint firstAttribute="trailing" secondItem="YiT-y2-cwB" secondAttribute="trailing" id="HgX-ax-xL9"/>
                 <constraint firstAttribute="trailing" secondItem="WNC-M3-ypN" secondAttribute="trailing" id="IeA-Xc-LLg"/>
-                <constraint firstAttribute="trailing" secondItem="gNc-FZ-SJF" secondAttribute="trailing" id="Kzt-zn-w48"/>
+                <constraint firstItem="YiT-y2-cwB" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="1:2" id="ItI-I1-T38"/>
                 <constraint firstAttribute="bottom" secondItem="fhX-ty-IAh" secondAttribute="bottom" id="Rem-87-GIi"/>
                 <constraint firstItem="FoR-z5-HgI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="WT2-lM-dF3"/>
                 <constraint firstItem="WNC-M3-ypN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="aXY-FZ-F2c"/>
+                <constraint firstItem="fhX-ty-IAh" firstAttribute="top" secondItem="YiT-y2-cwB" secondAttribute="bottom" id="bXR-SX-FuC"/>
                 <constraint firstAttribute="bottom" secondItem="WNC-M3-ypN" secondAttribute="bottom" id="dqe-I2-ohJ"/>
                 <constraint firstAttribute="trailing" secondItem="FoR-z5-HgI" secondAttribute="trailing" id="jAD-jl-TkL"/>
                 <constraint firstAttribute="trailing" secondItem="fhX-ty-IAh" secondAttribute="trailing" id="sHe-Am-4Aa"/>
-                <constraint firstItem="gNc-FZ-SJF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="uGl-yw-k1N"/>
+                <constraint firstItem="YiT-y2-cwB" firstAttribute="top" secondItem="FoR-z5-HgI" secondAttribute="bottom" id="th2-RA-9ZF"/>
             </constraints>
             <connections>
-                <outlet property="addButton" destination="gNc-FZ-SJF" id="y4O-kh-tnU"/>
+                <outlet property="addButtonBackground" destination="zlF-MW-ZaD" id="hr2-2J-l0c"/>
+                <outlet property="addButtonLabel" destination="yuN-EV-qdR" id="6dV-el-OBO"/>
                 <outlet property="imageView" destination="WNC-M3-ypN" id="huP-hU-gpj"/>
                 <outlet property="numberOfPostsLabel" destination="fhX-ty-IAh" id="Iov-xg-row"/>
                 <outlet property="tagLabel" destination="FoR-z5-HgI" id="RxN-DW-Wq4"/>

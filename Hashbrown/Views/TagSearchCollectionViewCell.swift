@@ -8,22 +8,13 @@
 
 import UIKit
 
-protocol TagSearchCollectionViewCellDelegate {
-
-    /**
-     Called when the user presses the add button on a tag search result
-
-     - parameter tag: The name of the tag
-     */
-    func didTapAddTagButton(tag: String)
-
-}
-
 struct TagSearchCollectionCellViewModel {
 
     let tagName: String
     let tagMediaCount: Int
     let imageURL: String?
+    let isAlreadyAdded: Bool
+    let row: Int // From the indexPath
 
 }
 
@@ -35,14 +26,21 @@ class TagSearchCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tagLabel: UILabel!
     @IBOutlet weak var numberOfPostsLabel: UILabel!
-    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var addButtonBackground: UIView!
+    @IBOutlet weak var addButtonLabel: UILabel!
 
     var viewModel: TagSearchCollectionCellViewModel?
-    var delegate: TagSearchCollectionViewCellDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = UIColor.grayColor()
+
+        addButtonBackground.layer.borderColor = UIColor.whiteColor().CGColor
+        addButtonBackground.layer.borderWidth = 2
+        addButtonBackground.layer.shadowColor = UIColor.blackColor().CGColor
+        addButtonBackground.layer.shadowOffset = CGSize(width: 0, height: 1)
+        addButtonLabel.shadowOffset = CGSize(width: 0, height: 1)
+        setButtonAsNotSelected()
     }
 
     override func prepareForReuse() {
@@ -57,19 +55,35 @@ class TagSearchCollectionViewCell: UICollectionViewCell {
         self.viewModel = viewModel
         tagLabel.text = "#\(viewModel.tagName)"
         numberOfPostsLabel.text = "\(viewModel.tagMediaCount) Posts"
+
+        // Alternate placeholder background colours
+        backgroundColor = viewModel.row % 2 == 0 ? UIColor.lightGrayColor() : UIColor.grayColor()
+
+        // Set the selection state
+        if viewModel.isAlreadyAdded {
+            setButtonAsSelected()
+        } else {
+            setButtonAsNotSelected()
+        }
+
+        // Set the image
         if let imageURL = viewModel.imageURL, url = NSURL(string: imageURL) {
             imageView.hnk_setImageFromURL(url)
         }
     }
 
-    @IBAction func didTapAddButton(sender: AnyObject) {
-        guard let `viewModel` = viewModel else { return }
-        print("TEST: didTapAddButton")
-        delegate?.didTapAddTagButton(viewModel.tagName)
+    private func setButtonAsSelected() {
+        addButtonBackground.backgroundColor = UIColor.whiteColor()
+        addButtonLabel.shadowColor = UIColor.clearColor()
+        addButtonLabel.textColor = UIColor.blackColor()
+        addButtonLabel.text = "Added"
     }
 
-    override func canBecomeFocused() -> Bool {
-        return false
+    private func setButtonAsNotSelected() {
+        addButtonBackground.backgroundColor = UIColor.clearColor()
+        addButtonLabel.shadowColor = UIColor.blackColor()
+        addButtonLabel.textColor = UIColor.whiteColor()
+        addButtonLabel.text = "Add"
     }
 
 }

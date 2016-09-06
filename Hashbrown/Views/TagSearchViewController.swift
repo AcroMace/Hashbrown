@@ -18,6 +18,7 @@ class TagSearchViewController: UIViewController {
 
     private let instagramService = InstagramService()
     private var tags = [InstagramTag]()
+    private var addedTags = [String: Bool]() // [Tag name: Added]
 
     class func createInstance() -> TagSearchViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: NSBundle(forClass: TagSearchViewController.self))
@@ -32,33 +33,12 @@ class TagSearchViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         registerTagSearchCollectionViewCellNib()
-
-        reloadData()
     }
 
     private func registerTagSearchCollectionViewCellNib() {
         let nib = UINib(nibName: TagSearchCollectionViewCell.nibName, bundle: nibBundle)
         let reuseIdentifier = TagSearchCollectionViewCell.reuseIdentifier
         collectionView.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
-    }
-
-    private func reloadData() {
-        instagramService.searchForTags("hamilton") { [weak self] result in
-            guard let `self` = self else { return }
-            guard let `result` = result else { return }
-            self.tags = result
-            self.collectionView.reloadData()
-        }
-    }
-
-}
-
-// MARK: TagSearchCollectionViewCellDelegate
-
-extension TagSearchViewController: TagSearchCollectionViewCellDelegate {
-
-    func didTapAddTagButton(tag: String) {
-        log.debug("Adding tag: \(tag)")
     }
 
 }
@@ -68,8 +48,19 @@ extension TagSearchViewController: TagSearchCollectionViewCellDelegate {
 extension TagSearchViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        print("Search button clicked: \(searchBar.text)")
         searchBar.resignFirstResponder()
+
+        guard let query = searchBar.text else { return }
+        search(query)
+    }
+
+    private func search(query: String) {
+        log.debug("Searching for: \(query)")
+        instagramService.searchForTags(query) { [weak self] result in
+            guard let `self` = self, `result` = result else { return }
+            self.tags = result
+            self.collectionView.reloadData()
+        }
     }
 
 }
@@ -97,8 +88,15 @@ extension TagSearchViewController: UICollectionViewDelegate {
             return
         }
 
-        let tag = tags[indexPath.row]
-        log.debug("Added \(tag.name) to saved tags")
+        let tagName = tags[indexPath.row].name
+        if addedTags[tagName] == true {
+            addedTags[tagName] = nil
+            log.debug("Removed \(tagName) from saved tags")
+        } else {
+            addedTags[tagName] = true
+            log.debug("Added \(tagName) to saved tags")
+        }
+        collectionView.reloadData()
     }
 
 }
@@ -120,15 +118,19 @@ extension TagSearchViewController: UICollectionViewDataSource {
             log.error("Could not dequeue TagSearchCollectionViewCell")
             return TagSearchCollectionViewCell()
         }
-        cell.delegate = self
 
-        // Configure the cell
         guard tags.count > indexPath.row else {
             return TagSearchCollectionViewCell()
         }
 
+        // Configure the cell
         let tag = tags[indexPath.row]
-        let viewModel = TagSearchCollectionCellViewModel(tagName: tag.name, tagMediaCount: tag.mediaCount, imageURL: nil)
+        let viewModel = TagSearchCollectionCellViewModel(
+            tagName: tag.name,
+            tagMediaCount: tag.mediaCount,
+            imageURL: nil,
+            isAlreadyAdded: addedTags[tag.name] == true,
+            row: indexPath.row)
         cell.configure(viewModel)
 
         return cell
