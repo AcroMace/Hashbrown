@@ -6,6 +6,8 @@
 //  Copyright © 2016 Andy Cho. All rights reserved.
 //
 
+import UIKit
+
 struct Constants {
 
     struct Instagram {
@@ -24,6 +26,10 @@ struct Constants {
 
     struct UserDefaults {
         static let instagramAuthToken = "instagramAuthToken"
+    }
+
+    struct Design {
+        static let numberOfColumns: CGFloat = 3
     }
 
 }

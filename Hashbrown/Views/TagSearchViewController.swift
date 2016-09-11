@@ -11,7 +11,6 @@ import UIKit
 class TagSearchViewController: UIViewController {
 
     static let storyboardName = String(TagSearchViewController)
-    static let numberOfColumns: CGFloat = 3
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -33,6 +32,11 @@ class TagSearchViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         registerTagSearchCollectionViewCellNib()
+    }
+
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        collectionView.reloadData()
     }
 
     private func registerTagSearchCollectionViewCellNib() {
@@ -70,7 +74,7 @@ extension TagSearchViewController: UISearchBarDelegate {
 extension TagSearchViewController: UICollectionViewDelegate {
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = floor(view.frame.width / TagSearchViewController.numberOfColumns)
+        let width = floor(view.frame.width / Constants.Design.numberOfColumns)
         return CGSize(width: width, height: width)
     }
 

@@ -93,7 +93,7 @@ class InstagramService {
             return
         }
 
-        let parameters = ["q": query, "access_token": authToken]
+        let parameters = ["q": query.lowercaseString, "access_token": authToken]
         guard let url = constructURL(.TagSearch, parameters: parameters) else {
             log.error("Could not construct searchForTags URL")
             return

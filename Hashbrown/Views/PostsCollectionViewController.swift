@@ -15,7 +15,6 @@ struct PostsCollectionViewModel {
 class PostsCollectionViewController: UIViewController {
 
     static let storyboardName = String(PostsCollectionViewController)
-    static let numberOfColumns: CGFloat = 3
 
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -42,6 +41,11 @@ class PostsCollectionViewController: UIViewController {
         reloadData()
     }
 
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        collectionView.reloadData()
+    }
+
     private func registerPostsCollectionViewCellNib() {
         let nib = UINib(nibName: PostsCollectionViewCell.nibName, bundle: nibBundle)
         let reuseIdentifier = PostsCollectionViewCell.reuseIdentifier
@@ -64,7 +68,7 @@ class PostsCollectionViewController: UIViewController {
 extension PostsCollectionViewController: UICollectionViewDelegate {
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = floor(view.frame.width / PostsCollectionViewController.numberOfColumns)
+        let width = floor(view.frame.width / Constants.Design.numberOfColumns)
         return CGSize(width: width, height: width)
     }
 

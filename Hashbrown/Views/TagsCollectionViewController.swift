@@ -11,7 +11,6 @@ import UIKit
 class TagsCollectionViewController: UIViewController {
 
     static let storyboardName = String(TagsCollectionViewController)
-    static let numberOfColumns: CGFloat = 3
 
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -34,6 +33,11 @@ class TagsCollectionViewController: UIViewController {
         registerTagCollectionViewCellNib()
 
         reloadData()
+    }
+
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        collectionView.reloadData()
     }
 
     private func registerTagCollectionViewCellNib() {
@@ -74,7 +78,7 @@ class TagsCollectionViewController: UIViewController {
 extension TagsCollectionViewController: UICollectionViewDelegate {
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = floor(view.frame.width / TagsCollectionViewController.numberOfColumns)
+        let width = floor(view.frame.width / Constants.Design.numberOfColumns)
         return CGSize(width: width, height: width)
     }
 
