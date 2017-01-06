@@ -8,19 +8,18 @@
 
 import Alamofire
 import Haneke
-import SimpleAuth
 import SwiftyJSON
 
 private enum InstagramURL {
 
-    case TagSearch
-    case ImagesForTag(tag: String)
+    case tagSearch
+    case imagesForTag(tag: String)
 
     func path() -> String {
         switch self {
-        case .TagSearch:
+        case .tagSearch:
             return "v1/tags/search"
-        case .ImagesForTag(let tag):
+        case .imagesForTag(let tag):
             return "v1/tags/\(tag)/media/recent"
         }
     }
@@ -29,21 +28,13 @@ private enum InstagramURL {
 
 class InstagramService {
 
-    private static let baseURL = "https://api.instagram.com/"
+    fileprivate static let baseURL = "https://api.instagram.com/"
 
     /// Reference to the cache
-    private let cache = Shared.dataCache
+    fileprivate let cache = Shared.dataCache
 
     /// Auth token returned by Instagram
-    private static var authToken: String? = nil
-
-    init() {
-        // Initialize SimpleAuth for Instagram authorization
-        SimpleAuth.configuration()[Constants.Instagram.simpleAuthProvider] = [
-            "client_id": Constants.Instagram.clientID,
-            SimpleAuthRedirectURIKey: Constants.Instagram.redirectURI
-        ]
-    }
+    fileprivate static var authToken: String? = nil
 
     /**
      Check if the user is already authorized
@@ -59,26 +50,14 @@ class InstagramService {
 
      - parameter callback: Calls back with the Instagram auth token
      */
-    func authorize(callback: (String -> Void)) {
+    func authorize(container: UIViewController, _ callback: @escaping ((String) -> Void)) {
         // See if we already have the token cached (pre-fetched or in user defaults)
         if let authToken = getCachedAuthToken() {
             callback(authToken)
             return
         }
 
-        let provider = Constants.Instagram.simpleAuthProvider
-        let options = ["scope": Constants.Instagram.oauthScope]
-        SimpleAuth.authorize(provider, options: options) { [weak self] response, error in
-            guard let authToken = JSON(response)["credentials"]["token"].string else {
-                log.error("Could not fetch auth token from Instagram")
-                return
-            }
-
-            // Cache the token so that we don't need to authorize again later
-            InstagramService.authToken = authToken
-            UserDefaults.save(Constants.UserDefaults.instagramAuthToken, value: authToken)
-            callback(authToken)
-        }
+        // TODO: Add OAuth code here
     }
 
     /**
@@ -87,14 +66,14 @@ class InstagramService {
      - parameter query:    The query given to search for tags
      - parameter callback: Callback with a list of tags
      */
-    func searchForTags(query: String, callback: ([InstagramTag]? -> Void)) {
+    func searchForTags(query: String, callback: @escaping (([InstagramTag]?) -> Void)) {
         guard let authToken = InstagramService.authToken else {
             log.error("Attempted to search Instagram without being authorized")
             return
         }
 
-        let parameters = ["q": query.lowercaseString, "access_token": authToken]
-        guard let url = constructURL(.TagSearch, parameters: parameters) else {
+        let parameters = ["q": query.lowercased(), "access_token": authToken]
+        guard let url = constructURL(with: .tagSearch, parameters: parameters) else {
             log.error("Could not construct searchForTags URL")
             return
         }
@@ -102,7 +81,7 @@ class InstagramService {
         cache.fetch(key: url)
             .onSuccess({ data in
                 log.debug("Cache hit for \(url)")
-                guard let tags = InstagramTag.parseFromJSON(JSON(data: data)) else {
+                guard let tags = InstagramTag.parse(from: JSON(data: data)) else {
                     log.error("Unexpected format returned from cache \(url)")
                     return
                 }
@@ -110,18 +89,18 @@ class InstagramService {
             })
             .onFailure({ [weak self] _ in
                 log.debug("Cache miss for \(url)")
-                self?.searchForTagsNetwork(url, callback: callback)
+                self?.searchForTagsNetwork(with: url, callback: callback)
             })
     }
 
-    func imagesForTag(tag: String, callback: ([InstagramPost]? -> Void)) {
+    func images(for tag: String, callback: @escaping (([InstagramPost]?) -> Void)) {
         guard let authToken = InstagramService.authToken else {
             log.error("Attempted to search Instagram without being authorized")
             return
         }
 
         let parameters = ["access_token": authToken]
-        guard let url = constructURL(.ImagesForTag(tag: tag), parameters: parameters) else {
+        guard let url = constructURL(with: .imagesForTag(tag: tag), parameters: parameters) else {
             log.error("Could not construct getImagesForTag URL")
             return
         }
@@ -129,7 +108,7 @@ class InstagramService {
         cache.fetch(key: url)
             .onSuccess({ data in
                 log.debug("Cache hit for \(url)")
-                guard let posts = InstagramPost.parseFromJSON(JSON(data: data)) else {
+                guard let posts = InstagramPost.parse(from: JSON(data: data)) else {
                     log.error("Unexpected format returned from cache \(url)")
                     return
                 }
@@ -137,7 +116,7 @@ class InstagramService {
             })
             .onFailure({ [weak self] _ in
                 log.debug("Cache miss for \(url)")
-                self?.imagesForTagNetwork(url, callback: callback)
+                self?.imagesForTagNetwork(with: url, callback: callback)
             })
     }
 
@@ -148,14 +127,14 @@ class InstagramService {
 
      - returns: Return the auth token if it exists, nil if not
      */
-    private func getCachedAuthToken() -> String? {
+    fileprivate func getCachedAuthToken() -> String? {
         // If we already fetched the token, just return it
         if let authToken = InstagramService.authToken {
             return authToken
         }
 
         // See if it's saved in user defaults
-        if let authToken = UserDefaults.get(Constants.UserDefaults.instagramAuthToken) as? String {
+        if let authToken = UserDefaults.get(key: Constants.UserDefaults.instagramAuthToken) as? String {
             InstagramService.authToken = authToken
             return authToken
         }
@@ -173,11 +152,11 @@ class InstagramService {
 
      - returns: The URL to query
      */
-    private func constructURL(url: InstagramURL, parameters: [String: String]) -> String? {
-        let urlComponents = NSURLComponents(string: InstagramService.baseURL + url.path())
-        let queryItems = parameters.map { NSURLQueryItem(name: $0, value: $1) }
+    fileprivate func constructURL(with url: InstagramURL, parameters: [String: String]) -> String? {
+        var urlComponents = URLComponents(string: InstagramService.baseURL + url.path())
+        let queryItems = parameters.map { URLQueryItem(name: $0, value: $1) }
         urlComponents?.queryItems = queryItems
-        return urlComponents?.URL?.absoluteString
+        return urlComponents?.url?.absoluteString
     }
 
 }
@@ -193,13 +172,13 @@ extension InstagramService {
      - parameter url:      URL string constructed from `constructURL`
      - parameter callback: Callback with a list of tags
      */
-    private func searchForTagsNetwork(url: String, callback: ([InstagramTag]? -> Void)) {
-        Alamofire.request(.GET, url)
+    fileprivate func searchForTagsNetwork(with url: String, callback: @escaping (([InstagramTag]?) -> Void)) {
+        Alamofire.request(url)
             .validate()
             .responseJSON { [weak self] response in
                 guard let `self` = self else { return }
                 switch response.result {
-                case .Success:
+                case .success:
                     guard let value = response.result.value else {
                         log.error("Server returned nil while searching for tags \(url)")
                         return
@@ -207,26 +186,26 @@ extension InstagramService {
                     dispatch_background {
                         // Parse the JSON in the background
                         let json = JSON(value)
-                        let tags = InstagramTag.parseFromJSON(json)
+                        let tags = InstagramTag.parse(from: json)
 
                         dispatch_main_async {
-                            self.cacheJSON(url, json: json)
+                            self.cacheJSON(key: url, json: json)
                             callback(tags)
                         }
                     }
-                case .Failure(let error):
+                case .failure(let error):
                     log.error(error)
                 }
         }
     }
 
-    private func imagesForTagNetwork(url: String, callback: ([InstagramPost]? -> Void)) {
-        Alamofire.request(.GET, url)
+    fileprivate func imagesForTagNetwork(with url: String, callback: @escaping (([InstagramPost]?) -> Void)) {
+        Alamofire.request(url)
             .validate()
             .responseJSON { [weak self] response in
                 guard let `self` = self else { return }
                 switch response.result {
-                case .Success:
+                case .success:
                     guard let value = response.result.value else {
                         log.error("Server returned nil while getting images for tag \(url)")
                         return
@@ -234,14 +213,14 @@ extension InstagramService {
                     dispatch_background {
                         // Parse the JSON in the background
                         let json = JSON(value)
-                        let posts = InstagramPost.parseFromJSON(json)
+                        let posts = InstagramPost.parse(from: json)
 
                         dispatch_main_async {
-                            self.cacheJSON(url, json: json)
+                            self.cacheJSON(key: url, json: json)
                             callback(posts)
                         }
                     }
-                case .Failure(let error):
+                case .failure(let error):
                     log.error(error)
                 }
         }
@@ -253,7 +232,7 @@ extension InstagramService {
      - parameter key:  The string key (ex. URL)
      - parameter json: The JSON object to save
      */
-    private func cacheJSON(key: String, json: SwiftyJSON.JSON) {
+    fileprivate func cacheJSON(key: String, json: SwiftyJSON.JSON) {
         guard let data = try? json.rawData() else {
             log.error("Failed to cache JSON for key \(key)")
             return

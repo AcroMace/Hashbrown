@@ -13,9 +13,8 @@ import UIKit
 
  - parameter block: Block to run asynchronously
  */
-func dispatch_background(block: dispatch_block_t) {
-    // This becomes `DispatchQueue.global(attributes: [.qosDefault]).async` in Swift 3
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), block)
+func dispatch_background(_ block: @escaping ()->()) {
+    DispatchQueue.global(qos: .background).async(execute: block)
 }
 
 /**
@@ -23,7 +22,6 @@ func dispatch_background(block: dispatch_block_t) {
 
  - parameter block: Block to run asynchronously
  */
-func dispatch_main_async(block: dispatch_block_t) {
-    // This becomes `DispatchQueue.main.async` in Swift 3
-    dispatch_async(dispatch_get_main_queue(), block)
+func dispatch_main_async(_ block: @escaping ()->()) {
+    DispatchQueue.main.async(execute: block)
 }

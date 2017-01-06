@@ -14,17 +14,17 @@ struct PostsCollectionViewModel {
 
 class PostsCollectionViewController: UIViewController {
 
-    static let storyboardName = String(PostsCollectionViewController)
+    static let storyboardName = String(describing: PostsCollectionViewController.self)
 
     @IBOutlet weak var collectionView: UICollectionView!
 
-    private let instagramService = InstagramService()
+    fileprivate let instagramService = InstagramService()
 
-    private var viewModel: PostsCollectionViewModel!
-    private var posts = [InstagramPost]()
+    fileprivate var viewModel: PostsCollectionViewModel!
+    fileprivate var posts = [InstagramPost]()
 
-    class func createInstance(tag: String) -> PostsCollectionViewController {
-        let storyboard = UIStoryboard(name: storyboardName, bundle: NSBundle(forClass: PostsCollectionViewController.self))
+    class func createInstance(_ tag: String) -> PostsCollectionViewController {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle(for: PostsCollectionViewController.self))
         let instance = storyboard.instantiateInitialViewController() as! PostsCollectionViewController
         instance.viewModel = PostsCollectionViewModel(tag: tag)
         return instance
@@ -41,19 +41,19 @@ class PostsCollectionViewController: UIViewController {
         reloadData()
     }
 
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         collectionView.reloadData()
     }
 
-    private func registerPostsCollectionViewCellNib() {
+    fileprivate func registerPostsCollectionViewCellNib() {
         let nib = UINib(nibName: PostsCollectionViewCell.nibName, bundle: nibBundle)
         let reuseIdentifier = PostsCollectionViewCell.reuseIdentifier
-        collectionView.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }
 
     func reloadData() {
-        instagramService.imagesForTag("polymerclay") { [weak self] result in
+        instagramService.images(for: "polymerclay") { [weak self] result in
             guard let `self` = self else { return }
             guard let `result` = result else { return }
             self.posts = result
@@ -67,16 +67,16 @@ class PostsCollectionViewController: UIViewController {
 
 extension PostsCollectionViewController: UICollectionViewDelegate {
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         let width = floor(view.frame.width / Constants.Design.numberOfColumns)
         return CGSize(width: width, height: width)
     }
 
-    func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
 
@@ -86,16 +86,16 @@ extension PostsCollectionViewController: UICollectionViewDelegate {
 
 extension PostsCollectionViewController: UICollectionViewDataSource {
 
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts.count
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(PostsCollectionViewCell.reuseIdentifier, forIndexPath: indexPath) as? PostsCollectionViewCell else {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PostsCollectionViewCell.reuseIdentifier, for: indexPath) as? PostsCollectionViewCell else {
             log.error("Could not dequeue PostsCollectionViewCell")
             return PostsCollectionViewCell()
         }

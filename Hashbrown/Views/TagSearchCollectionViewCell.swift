@@ -20,8 +20,8 @@ struct TagSearchCollectionCellViewModel {
 
 class TagSearchCollectionViewCell: UICollectionViewCell {
 
-    static let nibName = String(TagSearchCollectionViewCell)
-    static let reuseIdentifier = String(TagSearchCollectionViewCell)
+    static let nibName = String(describing: TagSearchCollectionViewCell.self)
+    static let reuseIdentifier = String(describing: TagSearchCollectionViewCell.self)
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tagLabel: UILabel!
@@ -33,11 +33,11 @@ class TagSearchCollectionViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = UIColor.grayColor()
+        backgroundColor = UIColor.gray
 
-        addButtonBackground.layer.borderColor = UIColor.whiteColor().CGColor
+        addButtonBackground.layer.borderColor = UIColor.white.cgColor
         addButtonBackground.layer.borderWidth = 2
-        addButtonBackground.layer.shadowColor = UIColor.blackColor().CGColor
+        addButtonBackground.layer.shadowColor = UIColor.black.cgColor
         addButtonBackground.layer.shadowOffset = CGSize(width: 0, height: 1)
         addButtonLabel.shadowOffset = CGSize(width: 0, height: 1)
         setButtonAsNotSelected()
@@ -51,13 +51,13 @@ class TagSearchCollectionViewCell: UICollectionViewCell {
         tagLabel.text = ""
     }
 
-    func configure(viewModel: TagSearchCollectionCellViewModel) {
+    func configure(_ viewModel: TagSearchCollectionCellViewModel) {
         self.viewModel = viewModel
         tagLabel.text = "#\(viewModel.tagName)"
         numberOfPostsLabel.text = "\(viewModel.tagMediaCount) Posts"
 
         // Alternate placeholder background colours
-        backgroundColor = viewModel.row % 2 == 0 ? UIColor.lightGrayColor() : UIColor.grayColor()
+        backgroundColor = viewModel.row % 2 == 0 ? UIColor.lightGray : UIColor.gray
 
         // Set the selection state
         if viewModel.isAlreadyAdded {
@@ -67,22 +67,22 @@ class TagSearchCollectionViewCell: UICollectionViewCell {
         }
 
         // Set the image
-        if let imageURL = viewModel.imageURL, url = NSURL(string: imageURL) {
+        if let imageURL = viewModel.imageURL, let url = URL(string: imageURL) {
             imageView.hnk_setImageFromURL(url)
         }
     }
 
-    private func setButtonAsSelected() {
-        addButtonBackground.backgroundColor = UIColor.whiteColor()
-        addButtonLabel.shadowColor = UIColor.clearColor()
-        addButtonLabel.textColor = UIColor.blackColor()
+    fileprivate func setButtonAsSelected() {
+        addButtonBackground.backgroundColor = UIColor.white
+        addButtonLabel.shadowColor = UIColor.clear
+        addButtonLabel.textColor = UIColor.black
         addButtonLabel.text = "Added"
     }
 
-    private func setButtonAsNotSelected() {
-        addButtonBackground.backgroundColor = UIColor.clearColor()
-        addButtonLabel.shadowColor = UIColor.blackColor()
-        addButtonLabel.textColor = UIColor.whiteColor()
+    fileprivate func setButtonAsNotSelected() {
+        addButtonBackground.backgroundColor = UIColor.clear
+        addButtonLabel.shadowColor = UIColor.black
+        addButtonLabel.textColor = UIColor.white
         addButtonLabel.text = "Add"
     }
 

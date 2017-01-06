@@ -22,14 +22,14 @@ struct InstagramLocation {
 
      - returns: A parsed location, `nil` if the parsing failed
      */
-    static func parseFromJSON(json: JSON) -> InstagramLocation? {
+    static func parse(from json: JSON) -> InstagramLocation? {
         // Location is nullable
         guard !json.isEmpty else { return nil }
 
         guard let id = json["id"].int, // Why is this not a string?!
-            name = json["name"].string,
-            latitude = json["latitude"].double,
-            longitude = json["longitude"].double else {
+            let name = json["name"].string,
+            let latitude = json["latitude"].double,
+            let longitude = json["longitude"].double else {
                 log.error("Could not parse location from JSON \(json)")
                 return nil
         }

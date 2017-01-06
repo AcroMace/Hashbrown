@@ -22,11 +22,11 @@ struct InstagramUser {
 
      - returns: A parsed Instagram user, `nil` if the parsing failed
      */
-    static func parseFromJSON(json: JSON) -> InstagramUser? {
+    static func parse(from json: JSON) -> InstagramUser? {
         guard let username = json["username"].string,
-            id = json["id"].string,
-            profilePicture = json["profile_picture"].string,
-            fullName = json["full_name"].string else {
+            let id = json["id"].string,
+            let profilePicture = json["profile_picture"].string,
+            let fullName = json["full_name"].string else {
                 log.warning("Could not parse user from JSON: \(json)")
                 return nil
         }

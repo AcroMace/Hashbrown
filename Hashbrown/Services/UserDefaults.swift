@@ -11,19 +11,20 @@ import UIKit
 struct UserDefaults {
 
     static func get(key: String) -> AnyObject? {
-        return getInstance().objectForKey(key)
+        return getInstance().object(forKey: key) as AnyObject?
     }
 
     static func save(key: String, value: AnyObject) {
-        getInstance().setObject(value, forKey: key)
+        getInstance().set(value, forKey: key)
     }
 
-    static func delete(key: String) {
-        getInstance().setObject(nil, forKey: key)
+    static func delete(
+        key: String) {
+        getInstance().set(nil, forKey: key)
     }
 
-    static private func getInstance() -> NSUserDefaults {
-        return NSUserDefaults.standardUserDefaults()
+    static fileprivate func getInstance() -> Foundation.UserDefaults {
+        return Foundation.UserDefaults.standard
     }
 
 }

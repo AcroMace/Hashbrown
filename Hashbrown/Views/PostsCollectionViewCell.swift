@@ -15,14 +15,14 @@ struct PostsCollectionCellViewModel {
 
 class PostsCollectionViewCell: UICollectionViewCell {
 
-    static let nibName = String(PostsCollectionViewCell)
-    static let reuseIdentifier = String(PostsCollectionViewCell)
+    static let nibName = String(describing: PostsCollectionViewCell.self)
+    static let reuseIdentifier = String(describing: PostsCollectionViewCell.self)
 
     @IBOutlet weak var imageView: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = UIColor.grayColor()
+        backgroundColor = UIColor.gray
     }
 
     override func prepareForReuse() {
@@ -31,8 +31,8 @@ class PostsCollectionViewCell: UICollectionViewCell {
         imageView.image = nil
     }
 
-    func configure(viewModel: PostsCollectionCellViewModel) {
-        if let imageURL = NSURL(string: viewModel.post.imageURL) {
+    func configure(_ viewModel: PostsCollectionCellViewModel) {
+        if let imageURL = URL(string: viewModel.post.imageURL) {
             imageView.hnk_setImageFromURL(imageURL)
         }
     }

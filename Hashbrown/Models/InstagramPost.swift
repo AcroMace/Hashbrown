@@ -30,7 +30,7 @@ struct InstagramPost {
 
      - returns: A parsed list of tags, `nil` if the parsing failed
      */
-    static func parseFromJSON(json: JSON) -> [InstagramPost]? {
+    static func parse(from json: JSON) -> [InstagramPost]? {
         guard let postList = json["data"].array else {
             log.error("Could not parse list of posts from JSON \(json)")
             return nil
@@ -40,7 +40,7 @@ struct InstagramPost {
         let minTagID = json["pagination"]["min_tag_id"].string
         log.info("minTagID: \(minTagID)")
 
-        return postList.flatMap { parsePostFromJSON($0) }
+        return postList.flatMap { parsePost(from: $0) }
     }
 
     /**
@@ -50,25 +50,25 @@ struct InstagramPost {
 
      - returns: A parsed Instagram user, `nil` if the parsing failed
      */
-    static func parsePostFromJSON(json: JSON) -> InstagramPost? {
+    static func parsePost(from json: JSON) -> InstagramPost? {
         guard let id = json["id"].string,
-            createdTime = json["created_time"].string,
-            createdTimeInt = Int(createdTime),
-            caption = json["caption"]["text"].string,
-            link = json["link"].string,
-            tags = json["tags"].array?.flatMap({ $0.string }),
-            likes = json["likes"]["count"].int,
-            type = json["type"].string,
-            filter = json["filter"].string,
-            imageURL = json["images"]["standard_resolution"]["url"].string,
-            userHasLiked = json["user_has_liked"].bool,
-            user = InstagramUser.parseFromJSON(json["user"]) else {
+            let createdTime = json["created_time"].string,
+            let createdTimeInt = Int(createdTime),
+            let caption = json["caption"]["text"].string,
+            let link = json["link"].string,
+            let tags = json["tags"].array?.flatMap({ $0.string }),
+            let likes = json["likes"]["count"].int,
+            let type = json["type"].string,
+            let filter = json["filter"].string,
+            let imageURL = json["images"]["standard_resolution"]["url"].string,
+            let userHasLiked = json["user_has_liked"].bool,
+            let user = InstagramUser.parse(from: json["user"]) else {
                 log.warning("Could not parse post from JSON: \(json)")
                 return nil
         }
 
-        let location = InstagramLocation.parseFromJSON(json["location"])
-        let createdTimeDate = NSDate(timeIntervalSince1970: NSTimeInterval(createdTimeInt))
+        let location = InstagramLocation.parse(from: json["location"])
+        let createdTimeDate = NSDate(timeIntervalSince1970: TimeInterval(createdTimeInt))
 
         return InstagramPost(
             postID: id,

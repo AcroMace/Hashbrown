@@ -85,23 +85,13 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/CMDQueryStringSerialization/CMDQueryStringSerialization.framework"
   install_framework "$BUILT_PRODUCTS_DIR/HanekeSwift/Haneke.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/ISO8601/ISO8601.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/ReactiveCocoa/ReactiveCocoa.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/Result/Result.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/SimpleAuth/SimpleAuth.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyBeaver/SwiftyBeaver.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/CMDQueryStringSerialization/CMDQueryStringSerialization.framework"
   install_framework "$BUILT_PRODUCTS_DIR/HanekeSwift/Haneke.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/ISO8601/ISO8601.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/ReactiveCocoa/ReactiveCocoa.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/Result/Result.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/SimpleAuth/SimpleAuth.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyBeaver/SwiftyBeaver.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
 fi

@@ -10,15 +10,15 @@ import UIKit
 
 class TagsCollectionViewController: UIViewController {
 
-    static let storyboardName = String(TagsCollectionViewController)
+    static let storyboardName = String(describing: TagsCollectionViewController.self)
 
     @IBOutlet weak var collectionView: UICollectionView!
 
-    private let instagramService = InstagramService()
-    private var tags = [InstagramTag]()
+    fileprivate let instagramService = InstagramService()
+    fileprivate var tags = [InstagramTag]()
 
     class func createInstance() -> TagsCollectionViewController {
-        let storyboard = UIStoryboard(name: storyboardName, bundle: NSBundle(forClass: TagsCollectionViewController.self))
+        let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle(for: TagsCollectionViewController.self))
         let instance = storyboard.instantiateInitialViewController() as! TagsCollectionViewController
         return instance
     }
@@ -35,19 +35,19 @@ class TagsCollectionViewController: UIViewController {
         reloadData()
     }
 
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         collectionView.reloadData()
     }
 
-    private func registerTagCollectionViewCellNib() {
+    fileprivate func registerTagCollectionViewCellNib() {
         let nib = UINib(nibName: TagCollectionViewCell.nibName, bundle: nibBundle)
         let reuseIdentifier = TagCollectionViewCell.reuseIdentifier
-        collectionView.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }
 
-    private func reloadData() {
-        instagramService.searchForTags("hamilton") { [weak self] result in
+    fileprivate func reloadData() {
+        instagramService.searchForTags(query: "hamilton") { [weak self] result in
             guard let `self` = self else { return }
             guard let `result` = result else { return }
             self.tags = result
@@ -55,16 +55,16 @@ class TagsCollectionViewController: UIViewController {
         }
     }
 
-    private func addPlusButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(openSearchView))
+    fileprivate func addPlusButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openSearchView))
     }
 
-    @objc private func openSearchView() {
+    @objc fileprivate func openSearchView() {
         let searchVC = TagSearchViewController.createInstance()
         navigationController?.pushViewController(searchVC, animated: true)
     }
 
-    private func popTheNavigationStack() {
+    fileprivate func popTheNavigationStack() {
         // Pop the navigation stack so that we no longer have the back button
         guard let thisViewController = navigationController?.viewControllers.last else { return }
         navigationController?.viewControllers = [thisViewController]
@@ -77,20 +77,20 @@ class TagsCollectionViewController: UIViewController {
 
 extension TagsCollectionViewController: UICollectionViewDelegate {
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         let width = floor(view.frame.width / Constants.Design.numberOfColumns)
         return CGSize(width: width, height: width)
     }
 
-    func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.row < tags.count else {
             log.error("Tapped a cell that was out of range")
             return
@@ -107,16 +107,16 @@ extension TagsCollectionViewController: UICollectionViewDelegate {
 
 extension TagsCollectionViewController: UICollectionViewDataSource {
 
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tags.count
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(TagCollectionViewCell.reuseIdentifier, forIndexPath: indexPath) as? TagCollectionViewCell else {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.reuseIdentifier, for: indexPath) as? TagCollectionViewCell else {
             log.error("Could not dequeue TagCollectionViewCell")
             return TagCollectionViewCell()
         }

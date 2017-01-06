@@ -10,17 +10,17 @@ import UIKit
 
 class TagSearchViewController: UIViewController {
 
-    static let storyboardName = String(TagSearchViewController)
+    static let storyboardName = String(describing: TagSearchViewController.self)
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
 
-    private let instagramService = InstagramService()
-    private var tags = [InstagramTag]()
-    private var addedTags = [String: Bool]() // [Tag name: Added]
+    fileprivate let instagramService = InstagramService()
+    fileprivate var tags = [InstagramTag]()
+    fileprivate var addedTags = [String: Bool]() // [Tag name: Added]
 
     class func createInstance() -> TagSearchViewController {
-        let storyboard = UIStoryboard(name: storyboardName, bundle: NSBundle(forClass: TagSearchViewController.self))
+        let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle(for: TagSearchViewController.self))
         let instance = storyboard.instantiateInitialViewController() as! TagSearchViewController
         return instance
     }
@@ -34,15 +34,15 @@ class TagSearchViewController: UIViewController {
         registerTagSearchCollectionViewCellNib()
     }
 
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         collectionView.reloadData()
     }
 
-    private func registerTagSearchCollectionViewCellNib() {
+    fileprivate func registerTagSearchCollectionViewCellNib() {
         let nib = UINib(nibName: TagSearchCollectionViewCell.nibName, bundle: nibBundle)
         let reuseIdentifier = TagSearchCollectionViewCell.reuseIdentifier
-        collectionView.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }
 
 }
@@ -51,17 +51,17 @@ class TagSearchViewController: UIViewController {
 
 extension TagSearchViewController: UISearchBarDelegate {
 
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
 
         guard let query = searchBar.text else { return }
         search(query)
     }
 
-    private func search(query: String) {
+    fileprivate func search(_ query: String) {
         log.debug("Searching for: \(query)")
-        instagramService.searchForTags(query) { [weak self] result in
-            guard let `self` = self, `result` = result else { return }
+        instagramService.searchForTags(query: query) { [weak self] result in
+            guard let `self` = self, let `result` = result else { return }
             self.tags = result
             self.collectionView.reloadData()
         }
@@ -73,20 +73,20 @@ extension TagSearchViewController: UISearchBarDelegate {
 
 extension TagSearchViewController: UICollectionViewDelegate {
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         let width = floor(view.frame.width / Constants.Design.numberOfColumns)
         return CGSize(width: width, height: width)
     }
 
-    func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.row < tags.count else {
             log.error("Tapped a cell that was out of range")
             return
@@ -109,16 +109,16 @@ extension TagSearchViewController: UICollectionViewDelegate {
 
 extension TagSearchViewController: UICollectionViewDataSource {
 
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tags.count
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(TagSearchCollectionViewCell.reuseIdentifier, forIndexPath: indexPath) as? TagSearchCollectionViewCell else {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagSearchCollectionViewCell.reuseIdentifier, for: indexPath) as? TagSearchCollectionViewCell else {
             log.error("Could not dequeue TagSearchCollectionViewCell")
             return TagSearchCollectionViewCell()
         }
