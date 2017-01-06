@@ -4,12 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Alamofire.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>HanekeSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>InstagramKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -32,12 +42,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0E44903DFA31678B97207A4A3C9CDB14</key>
+		<key>2E96A94508BDF7D09004904871F10848</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6C4BB6E1E3AA5684ADBA052804281CB6</key>
+		<key>5C69EA6AC041CD16890CB2F1107DEC57</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5D68AD3E87E7C4E04F7DF1B643C31032</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -47,12 +62,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A1B3EFDAADF85ECD70209FEF2B535B0B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>AE4759774042D8E013517E82C6F7A058</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BF393968630C30FB36704EB2DAA78E2C</key>
+		<key>CF671F7E57B92905F1CC91D036D6B4A7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

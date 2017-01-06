@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import InstagramKit
 
 class AuthorizeViewController: UIViewController {
 
     fileprivate let instagramService = InstagramService()
+    @IBOutlet weak var webView: UIWebView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +23,17 @@ class AuthorizeViewController: UIViewController {
     }
 
     @IBAction func authorizeWithInstagram(_ sender: AnyObject) {
-        instagramService.authorize(container: self, { [weak self] authToken in
-            self?.showTags(true)
-        })
+        instagramService.authorize(webView: webView, delegate: self)
+    }
+
+}
+
+// MARK: InstagramServiceAuthorizationDelegate
+
+extension AuthorizeViewController: InstagramServiceAuthorizationDelegate {
+
+    func didAuthorize(authToken: String) {
+        showTags(true)
     }
 
     fileprivate func showTags(_ animated: Bool) {

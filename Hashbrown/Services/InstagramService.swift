@@ -8,6 +8,7 @@
 
 import Alamofire
 import Haneke
+import InstagramKit
 import SwiftyJSON
 
 private enum InstagramURL {
@@ -26,7 +27,20 @@ private enum InstagramURL {
 
 }
 
-class InstagramService {
+/// A protocol for a delegate that is notified when the user is authorized with Instagram
+protocol InstagramServiceAuthorizationDelegate {
+
+    // This is kind of weird, but we need to listen for the UIWebView to see when it redirects
+    // with the auth token
+    // The alternative is saving the callback method as a property and then calling it
+    // after we get the event from the UIWebView
+
+    /// Called after the user is authorized with Instagram
+    func didAuthorize(authToken: String)
+
+}
+
+class InstagramService: NSObject {
 
     fileprivate static let baseURL = "https://api.instagram.com/"
 
@@ -35,6 +49,9 @@ class InstagramService {
 
     /// Auth token returned by Instagram
     fileprivate static var authToken: String? = nil
+
+    /// The delegate to notify after authorization (see func authorize)
+    fileprivate var authorizationDelegate: InstagramServiceAuthorizationDelegate?
 
     /**
      Check if the user is already authorized
@@ -50,14 +67,21 @@ class InstagramService {
 
      - parameter callback: Calls back with the Instagram auth token
      */
-    func authorize(container: UIViewController, _ callback: @escaping ((String) -> Void)) {
+    func authorize(webView: UIWebView, delegate: InstagramServiceAuthorizationDelegate) {
+        self.authorizationDelegate = delegate
+
         // See if we already have the token cached (pre-fetched or in user defaults)
         if let authToken = getCachedAuthToken() {
-            callback(authToken)
+            delegate.didAuthorize(authToken: authToken)
             return
         }
 
-        // TODO: Add OAuth code here
+        // Get the redirect requests
+        webView.delegate = self
+
+        // Start loading the requests in the provided UIWebView
+        let authURL = InstagramEngine.shared().authorizationURL()
+        webView.loadRequest(URLRequest(url: authURL))
     }
 
     /**
@@ -240,6 +264,35 @@ extension InstagramService {
         cache.set(value: data, key: key) { result in
             log.debug("Successfully cached JSON for \(key)")
         }
+    }
+
+}
+
+// MARK: UIWebViewDelegate
+
+extension InstagramService: UIWebViewDelegate {
+
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        // Just navigate to the URL if the user wasn't authenticated
+        guard let url = request.url, String(describing: url).range(of: "access") != nil else {
+            return true
+        }
+
+        // Check that the token is valid
+        let engine = InstagramEngine.shared()
+        guard let _ = try? engine.receivedValidAccessToken(from: url) else {
+            return true
+        }
+
+        if let accessToken = engine.accessToken {
+            // Cache the token so that we don't need to authorize again later
+            InstagramService.authToken = accessToken
+            UserDefaults.save(key: Constants.UserDefaults.instagramAuthToken, value: accessToken)
+
+            // Tell the delegate that the authorization is complete
+            authorizationDelegate?.didAuthorize(authToken: accessToken)
+        }
+        return true
     }
 
 }

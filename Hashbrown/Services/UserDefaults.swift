@@ -10,11 +10,11 @@ import UIKit
 
 struct UserDefaults {
 
-    static func get(key: String) -> AnyObject? {
-        return getInstance().object(forKey: key) as AnyObject?
+    static func get(key: String) -> Any? {
+        return getInstance().object(forKey: key) as Any?
     }
 
-    static func save(key: String, value: AnyObject) {
+    static func save(key: String, value: Any) {
         getInstance().set(value, forKey: key)
     }
 

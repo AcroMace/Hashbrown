@@ -11,7 +11,6 @@ import UIKit
 struct Constants {
 
     struct Instagram {
-        static let clientID = "a11d750426144ae6a8bb25c79afae138"
         static let oauthScope = [
             // User profile
             "basic",

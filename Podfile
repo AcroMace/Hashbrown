@@ -5,6 +5,7 @@ use_frameworks!
 target 'Hashbrown' do
   pod 'Alamofire'
   pod 'HanekeSwift', :git => 'https://github.com/Haneke/HanekeSwift.git', :branch => 'feature/swift-3'
+  pod 'InstagramKit'
   pod 'SwiftyBeaver'
   pod 'SwiftyJSON'
 end

@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="c19-jf-T2o">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="c19-jf-T2o">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Authorize View Controller-->
@@ -14,28 +17,39 @@
                         <viewControllerLayoutGuide type="bottom" id="6CX-Lx-6Et"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vUx-GT-TnM">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEY-O4-KZy">
-                                <rect key="frame" x="215" y="285" width="171" height="30"/>
+                                <rect key="frame" x="299" y="80" width="171" height="30"/>
                                 <state key="normal" title="Authorize with Instagram"/>
                                 <connections>
                                     <action selector="authorizeWithInstagram:" destination="bDj-84-kbC" eventType="touchUpInside" id="Jga-kB-ZSB"/>
                                 </connections>
                             </button>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fvj-ke-zIU">
+                                <rect key="frame" x="0.0" y="118" width="768" height="906"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="WEY-O4-KZy" firstAttribute="centerY" secondItem="vUx-GT-TnM" secondAttribute="centerY" id="DAe-2N-YPD"/>
+                            <constraint firstItem="6CX-Lx-6Et" firstAttribute="top" secondItem="fvj-ke-zIU" secondAttribute="bottom" id="HTU-FW-Ifs"/>
+                            <constraint firstItem="fvj-ke-zIU" firstAttribute="top" secondItem="WEY-O4-KZy" secondAttribute="bottom" constant="8" id="QrX-pS-1gA"/>
+                            <constraint firstItem="fvj-ke-zIU" firstAttribute="leading" secondItem="vUx-GT-TnM" secondAttribute="leading" id="Tsv-WO-Ns3"/>
+                            <constraint firstItem="WEY-O4-KZy" firstAttribute="top" secondItem="08e-Qf-H0b" secondAttribute="bottom" constant="16" id="Vw1-GG-mkg"/>
+                            <constraint firstAttribute="trailing" secondItem="fvj-ke-zIU" secondAttribute="trailing" id="jUz-yE-Nog"/>
                             <constraint firstItem="WEY-O4-KZy" firstAttribute="centerX" secondItem="vUx-GT-TnM" secondAttribute="centerX" id="y2A-cI-CnN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ezP-yW-uTQ"/>
+                    <connections>
+                        <outlet property="webView" destination="fvj-ke-zIU" id="qEV-NN-33O"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="scS-4a-yef" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2117" y="-365"/>
+            <point key="canvasLocation" x="2116.40625" y="-365.0390625"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JNe-hM-q7M">
